@@ -1,0 +1,11 @@
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\bin\Debug\firstVersionRobot.exe.config
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\bin\Debug\firstVersionRobot.exe
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\bin\Debug\firstVersionRobot.pdb
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\obj\Debug\firstVersionRobot.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\obj\Debug\firstVersionRobot.csproj.SuggestedBindingRedirects.cache
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\obj\Debug\firstVersionRobot.Form1.resources
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\obj\Debug\firstVersionRobot.Properties.Resources.resources
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\obj\Debug\firstVersionRobot.csproj.GenerateResource.cache
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\obj\Debug\firstVersionRobot.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\obj\Debug\firstVersionRobot.exe
+C:\Users\User\source\repos\firstVersionRobot\firstVersionRobot\obj\Debug\firstVersionRobot.pdb
