@@ -63,9 +63,9 @@ namespace firstVersionRobot.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap turtle {
+        internal static System.Drawing.Bitmap robot {
             get {
-                object obj = ResourceManager.GetObject("turtle", resourceCulture);
+                object obj = ResourceManager.GetObject("robot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

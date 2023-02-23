@@ -15,6 +15,9 @@ namespace firstVersionRobot
         public Form1()
         {
             InitializeComponent();
+            Image img = Properties.Resources.robot;
+            Robot robot = new Robot(img,0,0);
+            EnvironmentMap map = new EnvironmentMap(10,10,dataGridView1,robot);
             //DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
             //imageColumn.Width = 50;
             //dataGridView1.Columns.Add(imageColumn);
@@ -43,7 +46,6 @@ namespace firstVersionRobot
             //    dataGridView1.Rows[i].Height = 50;
             //}
 
-            EnvironmentMap environmentMap = new EnvironmentMap(10,11,dataGridView1);
            
         }
         
