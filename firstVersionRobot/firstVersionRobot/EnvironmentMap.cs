@@ -14,6 +14,8 @@ namespace firstVersionRobot
         Robot robot;
         private int _width;
         private int _height;
+        int robotX;
+        int robotY;
         private DataGridView _dataGridView;
         int[,] map1 = new int[,] {
     { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -24,11 +26,13 @@ namespace firstVersionRobot
     { 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 },
     { 1, 0, 1, 0, 0, 0, 0, 1, 0, 1 },
     { 1, 0, 1, 1, 1, 1, 1, 1, 0, 1 },
-    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 };
         public EnvironmentMap(int width, int height, DataGridView dataGridView, Robot robot)
-        {
+        {   
+            robotX = robot.x;
+            robotY = robot.y;
             _width = width;
             _height = height;
             _dataGridView = dataGridView;
@@ -72,7 +76,7 @@ namespace firstVersionRobot
         private int calculateDataGridViewSize(int size) {
             return size * 50;
         }
-        public void createLabirint(int[,] arr)
+        private void createLabirint(int[,] arr)
         {
             try
             {
@@ -84,20 +88,27 @@ namespace firstVersionRobot
                         {
                             _dataGridView.Rows[i].Cells[j].Style.BackColor = Color.Black;
                         }
+                        if (arr[i,j]==2) _dataGridView.Rows[i].Cells[j].Style.BackColor = Color.Green;
                     }
                 }
-                if (!checkСell(robot.x, robot.y)) throw new Exception("При создании карты робот оказался на стене");
+                if (isWall(robot.x, robot.y)) throw new Exception("При создании карты робот оказался на стене");
             }
             catch(Exception e)
             {
                 clearMap();
                 MessageBox.Show(e.Message);
             }
+           
         }
-        public bool checkСell(int x, int y)
+        public bool isWall(int x, int y)
         {
-            if (_dataGridView.Rows[y].Cells[x].Style.BackColor == Color.Black) return false;
-            return true;
+            if (_dataGridView.Rows[y].Cells[x].Style.BackColor == Color.Black) return true;
+            return false;
+        }
+        public bool isWin(int x, int y)
+        {
+            if (map1[x, y] == 2) { _dataGridView.Enabled = false; MessageBox.Show("Вы прошли лабиринт"); return true; }            
+            return false;
         }
         public void clearMap()
         {
@@ -108,6 +119,27 @@ namespace firstVersionRobot
                    _dataGridView.Rows[i].Cells[j].Style.BackColor = Color.White;
                 }
             }
+        }
+
+        public void updateMap(int newX, int newY) 
+        {
+            //  Заменяем ячейку с картинкой на обычную ячейку
+            DataGridViewCell cell = new DataGridViewTextBoxCell();
+            if (map1[robotX,robotY] == 2) cell.Style.BackColor = Color.Green;
+            cell.Value = null;
+            _dataGridView.Rows[robotY].Cells[robotX] = cell;
+
+            // Создаем новую ячейку с новой картинкой
+            DataGridViewImageCell imageCell = new DataGridViewImageCell();
+            imageCell.Value = robot.image;
+            imageCell.ImageLayout = DataGridViewImageCellLayout.Stretch;
+
+
+            // Добавляем новую ячейку в новую позицию
+            _dataGridView.Rows[newY].Cells[newX] = imageCell;
+            //Текущие координаты робота
+            robotX = newX;
+            robotY = newY;
         }
     }
 }

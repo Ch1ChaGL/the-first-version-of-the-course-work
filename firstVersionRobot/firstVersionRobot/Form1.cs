@@ -12,12 +12,17 @@ namespace firstVersionRobot
 {
     public partial class Form1 : Form
     {
+        Image img;
+        Robot robot;
         public Form1()
         {
             InitializeComponent();
-            Image img = Properties.Resources.robot;
-            Robot robot = new Robot(img,0,0);
+            img = Properties.Resources.robot;
+            robot = new Robot(img,0,0);
             EnvironmentMap map = new EnvironmentMap(10,10,dataGridView1,robot);
+
+            robot.execute("right",1);
+            robot.execute("down", 2);
             //DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
             //imageColumn.Width = 50;
             //dataGridView1.Columns.Add(imageColumn);
@@ -46,8 +51,27 @@ namespace firstVersionRobot
             //    dataGridView1.Rows[i].Height = 50;
             //}
 
-           
+
         }
-        
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            robot.execute("left", 1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            robot.execute("up", 1);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            robot.execute("right", 1);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            robot.execute("down", 1);
+        }
     }
 }
