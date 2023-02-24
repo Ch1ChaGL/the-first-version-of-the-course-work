@@ -98,6 +98,7 @@ namespace firstVersionRobot
             }
             envMap.isWin(this.x, this.y);
         }
+
         private void crashed()
         {
             this.x = 0;

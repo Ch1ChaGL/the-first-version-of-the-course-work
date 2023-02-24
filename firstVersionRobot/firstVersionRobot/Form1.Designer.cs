@@ -33,6 +33,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.Play = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,7 +52,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(671, 133);
+            this.button1.Location = new System.Drawing.Point(416, 654);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 72);
             this.button1.TabIndex = 1;
@@ -60,7 +62,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(782, 97);
+            this.button2.Location = new System.Drawing.Point(488, 590);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 72);
             this.button2.TabIndex = 2;
@@ -70,7 +72,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(883, 133);
+            this.button3.Location = new System.Drawing.Point(555, 654);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 72);
             this.button3.TabIndex = 4;
@@ -80,7 +82,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(782, 192);
+            this.button4.Location = new System.Drawing.Point(488, 720);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 72);
             this.button4.TabIndex = 5;
@@ -88,11 +90,31 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(698, 11);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(307, 354);
+            this.richTextBox1.TabIndex = 6;
+            this.richTextBox1.Text = "";
+            // 
+            // Play
+            // 
+            this.Play.Location = new System.Drawing.Point(814, 439);
+            this.Play.Name = "Play";
+            this.Play.Size = new System.Drawing.Size(181, 63);
+            this.Play.TabIndex = 7;
+            this.Play.Text = "Play";
+            this.Play.UseVisualStyleBackColor = true;
+            this.Play.Click += new System.EventHandler(this.Play_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(997, 627);
+            this.ClientSize = new System.Drawing.Size(1113, 815);
+            this.Controls.Add(this.Play);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -112,6 +134,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button Play;
     }
 }
 

@@ -14,15 +14,17 @@ namespace firstVersionRobot
     {
         Image img;
         Robot robot;
+        Parser pars;
         public Form1()
         {
             InitializeComponent();
             img = Properties.Resources.robot;
             robot = new Robot(img,0,0);
             EnvironmentMap map = new EnvironmentMap(10,10,dataGridView1,robot);
-
+            pars = new Parser(400, 400, robot, richTextBox1);
             robot.execute("right",1);
             robot.execute("down", 2);
+
             //DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
             //imageColumn.Width = 50;
             //dataGridView1.Columns.Add(imageColumn);
@@ -72,6 +74,11 @@ namespace firstVersionRobot
         private void button4_Click(object sender, EventArgs e)
         {
             robot.execute("down", 1);
+        }
+
+        private void Play_Click(object sender, EventArgs e)
+        {   
+            pars.parseText();
         }
     }
 }
