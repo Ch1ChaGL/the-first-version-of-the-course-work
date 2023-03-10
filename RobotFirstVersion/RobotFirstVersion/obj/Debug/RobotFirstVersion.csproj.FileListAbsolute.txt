@@ -1,0 +1,12 @@
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\bin\Debug\RobotFirstVersion.exe.config
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\bin\Debug\RobotFirstVersion.exe
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\bin\Debug\RobotFirstVersion.pdb
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.SuggestedBindingRedirects.cache
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.Game.resources
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.MainMenu.resources
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.Properties.Resources.resources
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.GenerateResource.cache
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.exe
+C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.pdb
