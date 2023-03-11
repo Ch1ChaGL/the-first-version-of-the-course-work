@@ -18,7 +18,7 @@ namespace RobotFirstVersion
         public Game(int[,] map)
         {
             InitializeComponent();
-            robot = new Robot(0,0);
+            robot = new Robot(1,2);
             maze = new Maze(map, robot ,pictureBox1);
             robot.setMaze(maze);
 
@@ -52,7 +52,7 @@ namespace RobotFirstVersion
 
         private void Play_Click(object sender, EventArgs e)
         {   parser = new ParserCommand(TextField.Text);
-            parser.ParseAll(robot);
+            result(parser.ParseAll(robot));            
         }
 
         private void NextStep_Click(object sender, EventArgs e)
@@ -61,10 +61,30 @@ namespace RobotFirstVersion
             {
                 parser = new ParserCommand(TextField.Text);
             }
-
-            if (!parser.ParseNext(robot))
+            int value = parser.ParseNext(robot);
+            if (value != -1)
             {
+                result(value);
                 parser = null;
+            }
+        }
+
+        private void result(int res)
+        {
+            if(res == 1)
+            {
+                MessageBox.Show("Вы разбились");
+                maze.resetMap();
+            }
+            if (res == 3)
+            {
+                MessageBox.Show("Вы победили");
+                maze.resetMap();
+            }
+            if (res == 0)
+            {
+                MessageBox.Show("Вы не прошли лабиринт");
+                maze.resetMap();
             }
         }
     }

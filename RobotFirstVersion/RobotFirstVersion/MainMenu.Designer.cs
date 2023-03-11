@@ -49,7 +49,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(292, 99);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Выьрать карту";
+            this.button2.Text = "Выбрать карту";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button3

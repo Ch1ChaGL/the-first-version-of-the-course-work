@@ -19,24 +19,37 @@ namespace RobotFirstVersion
             _interpreter = new CommandInterpreter();
         }
 
-        public void ParseAll(Robot robot)
+        public int ParseAll(Robot robot)
         {
             foreach (var command in _commands)
             {
-                _interpreter.interpret(command, robot);
+                _interpreter.interpret(command, robot); 
+                if(robot.checkRobotStatus() == 1)
+                {
+                    return 1;
+                }
             }
+            return robot.checkRobotStatus();
         }
 
-        public bool ParseNext(Robot robot)
+        public int ParseNext(Robot robot)
         {
             if (_currentCommandIndex < _commands.Count)
             {
                 var command = _commands[_currentCommandIndex];
                  _interpreter.interpret(command,robot);
                 _currentCommandIndex++;
-                return true;
+                if (robot.checkRobotStatus() == 1)
+                {
+                    return 1;
+                }
+                if(_currentCommandIndex == _commands.Count)
+                {
+                    return robot.checkRobotStatus();
+                }
+                return -1;
             }
-            return false;
+            return 0;
         }
     }
 }
