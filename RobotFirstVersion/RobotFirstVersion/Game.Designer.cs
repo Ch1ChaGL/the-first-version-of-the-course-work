@@ -36,6 +36,7 @@
             this.Right = new System.Windows.Forms.Button();
             this.Play = new System.Windows.Forms.Button();
             this.NextStep = new System.Windows.Forms.Button();
+            this.Reset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,11 +116,22 @@
             this.NextStep.UseVisualStyleBackColor = true;
             this.NextStep.Click += new System.EventHandler(this.NextStep_Click);
             // 
+            // Reset
+            // 
+            this.Reset.Location = new System.Drawing.Point(955, 489);
+            this.Reset.Name = "Reset";
+            this.Reset.Size = new System.Drawing.Size(103, 42);
+            this.Reset.TabIndex = 8;
+            this.Reset.Text = "Reset";
+            this.Reset.UseVisualStyleBackColor = true;
+            this.Reset.Click += new System.EventHandler(this.Reset_Click);
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 689);
+            this.Controls.Add(this.Reset);
             this.Controls.Add(this.NextStep);
             this.Controls.Add(this.Play);
             this.Controls.Add(this.Right);
@@ -145,5 +157,6 @@
         private System.Windows.Forms.Button Right;
         private System.Windows.Forms.Button Play;
         private System.Windows.Forms.Button NextStep;
+        private System.Windows.Forms.Button Reset;
     }
 }

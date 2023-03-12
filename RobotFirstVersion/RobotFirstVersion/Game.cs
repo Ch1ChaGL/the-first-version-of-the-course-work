@@ -87,5 +87,12 @@ namespace RobotFirstVersion
                 maze.resetMap();
             }
         }
+
+        private void Reset_Click(object sender, EventArgs e)
+        {
+            TextField.Text = "";
+            maze.resetMap();
+            parser = null;
+        }
     }
 }

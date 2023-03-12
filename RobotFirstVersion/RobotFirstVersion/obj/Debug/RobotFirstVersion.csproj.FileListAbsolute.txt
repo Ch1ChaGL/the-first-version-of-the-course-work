@@ -10,3 +10,15 @@ C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFi
 C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.exe
 C:\Users\User\source\repos\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.pdb
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\bin\Debug\RobotFirstVersion.exe.config
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\bin\Debug\RobotFirstVersion.exe
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\bin\Debug\RobotFirstVersion.pdb
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.AssemblyReference.cache
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.SuggestedBindingRedirects.cache
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.Game.resources
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.MainMenu.resources
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.Properties.Resources.resources
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.GenerateResource.cache
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.CoreCompileInputs.cache
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.exe
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.pdb
