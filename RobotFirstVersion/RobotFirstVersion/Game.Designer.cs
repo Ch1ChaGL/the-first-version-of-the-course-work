@@ -40,14 +40,15 @@
             this.Delete = new System.Windows.Forms.Button();
             this.Copy = new System.Windows.Forms.Button();
             this.Clear = new System.Windows.Forms.Button();
+            this.Insert = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(42, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(551, 545);
+            this.pictureBox1.Size = new System.Drawing.Size(630, 642);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -160,11 +161,22 @@
             this.Clear.UseVisualStyleBackColor = true;
             this.Clear.Click += new System.EventHandler(this.Delete_Click);
             // 
+            // Insert
+            // 
+            this.Insert.Location = new System.Drawing.Point(671, 612);
+            this.Insert.Name = "Insert";
+            this.Insert.Size = new System.Drawing.Size(103, 42);
+            this.Insert.TabIndex = 12;
+            this.Insert.Text = "Insert";
+            this.Insert.UseVisualStyleBackColor = true;
+            this.Insert.Click += new System.EventHandler(this.Delete_Click);
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 689);
+            this.Controls.Add(this.Insert);
             this.Controls.Add(this.Clear);
             this.Controls.Add(this.Copy);
             this.Controls.Add(this.Delete);
@@ -198,5 +210,6 @@
         private System.Windows.Forms.Button Delete;
         private System.Windows.Forms.Button Copy;
         private System.Windows.Forms.Button Clear;
+        private System.Windows.Forms.Button Insert;
     }
 }

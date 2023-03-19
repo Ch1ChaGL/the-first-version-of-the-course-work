@@ -13,7 +13,7 @@ namespace RobotFirstVersion
     internal class Maze
     {
         //public bool status { get; private set; } = false;
-        int cellSize = 50;
+        int cellSize;
         Pen penR = new Pen(Color.Red);
         Pen penG = new Pen(Color.Green);
         private PictureBox _pictureBox;
@@ -21,10 +21,12 @@ namespace RobotFirstVersion
         Robot _robot;
         public Maze (int[,] map, Robot robot, PictureBox pictureBox)
         {
+            cellSize = Math.Min(pictureBox.Width / (map.GetLength(1) - 2), pictureBox.Height / (map.GetLength(0) - 2));
             _map = map;
             _robot = robot;
             _pictureBox = pictureBox;
             _pictureBox.Paint += new PaintEventHandler(pictureBox_Paint);
+  
             pictureBox.Width = (_map.GetLength(0) - 2) * cellSize + 1;
             pictureBox.Height = (_map.GetLength(1) - 2) * cellSize + 1;
         }
@@ -41,11 +43,11 @@ namespace RobotFirstVersion
                    
                     _canvas.DrawRectangle(penG, cellSize * (i - 1), cellSize * (j - 1), cellSize, cellSize);
                     //_canvas.DrawRectangle(penG, cellSize * i, cellSize * j, cellSize, cellSize);
-                    if (_map[i, j] == 1)
+                    if (_map[j, i] == 1)
                     {
                         _canvas.FillRectangle(Brushes.Black, cellSize * (i - 1), cellSize * (j - 1), cellSize - 2, cellSize - 2);
-                    }
-                    if (_map[i, j] == 3)
+                    }                                        
+                    if (_map[j, i] == 3)
                     {
                         _canvas.FillRectangle(Brushes.Green, cellSize * (i - 1), cellSize * (j - 1), cellSize - 2, cellSize - 2);
                     }
@@ -83,15 +85,15 @@ namespace RobotFirstVersion
 
         public int checkСell(int x, int y)
         {
-            if (_map[x,y] == 1)
+            if (_map[y,x] == 1)
             {
                 return 1; 
             }
-            if (_map[x, y] == 3)
+            if (_map[y, x] == 3)
             {
                 return 3;
             }
-            if (_map[x, y] == 0)
+            if (_map[y, x] == 0)
             {
                 return 0;
             }
@@ -119,8 +121,8 @@ namespace RobotFirstVersion
 
         public void resetMap()
         {
-            _robot.x = 1;
-            _robot.y = 1;
+            _robot.x = _robot.startX;
+            _robot.y = _robot.startY;
             _pictureBox.Invalidate();
             //status = false;
         }

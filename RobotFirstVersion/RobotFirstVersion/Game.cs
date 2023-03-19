@@ -16,14 +16,12 @@ namespace RobotFirstVersion
         Maze maze;
         Robot robot;
         ParserCommand parser = null;
-        public Game(int[,] map)
+        public Game(int[,] map, int robotX, int robotY)
         {
             InitializeComponent();
-            robot = new Robot(1,2);
+            robot = new Robot(robotX, robotY);
             maze = new Maze(map, robot ,pictureBox1);
             robot.setMaze(maze);
-
-
         }
 
         private void Down_Click(object sender, EventArgs e)
@@ -99,8 +97,18 @@ namespace RobotFirstVersion
             e.SuppressKeyPress = true;
             if (e.Control && e.KeyCode == Keys.V)
             {
-                // Вставляем текст из буфера обмена
-                TextField.Paste();
+
+                IDataObject clipboardData = Clipboard.GetDataObject();
+
+                if (clipboardData.GetDataPresent(DataFormats.UnicodeText))
+                {
+                    string text = (string)clipboardData.GetData(DataFormats.UnicodeText);
+                    TextField.SelectedText = text;
+                }
+
+                // Предотвращаем вставку остальных данных из буфера обмена
+                e.Handled = true;
+               
 
             }
             if (TextField.Text.Length > 0) {
@@ -163,59 +171,91 @@ namespace RobotFirstVersion
             TextField.Focus();
         }
 
-
-
-
         private void FnDelete()
         {
             int currentLineIndex = TextField.GetLineFromCharIndex(TextField.SelectionStart);
             int currentLineStart = TextField.GetFirstCharIndexFromLine(currentLineIndex);
             int currentLineEnd = TextField.GetFirstCharIndexFromLine(currentLineIndex + 1);
-            if (currentLineEnd == -1)
-            {
-                //currentLineEnd = TextField.Text.Length;
-                currentLineEnd = currentLineStart;
-                currentLineStart = TextField.GetFirstCharIndexFromLine(currentLineIndex - 1);
 
-                if (currentLineStart == -1)
+            if (currentLineIndex >= 0 && currentLineIndex < TextField.Lines.Length &&
+                        string.IsNullOrWhiteSpace(TextField.Lines[currentLineIndex]) && currentLineIndex > 0)
+            {
+                currentLineStart = GetPreviousLineStart(currentLineIndex);
+            }
+
+            if (currentLineStart == -1 && currentLineIndex > 0)
+            {
+                currentLineStart = GetPreviousLineStart(currentLineIndex);
+                if (currentLineEnd == -1)
                 {
-                    currentLineStart = 0;
+                    currentLineEnd = TextField.Text.Length;
                 }
             }
 
+            if (currentLineStart >= 0 && currentLineIndex >= 0)
+            {               
+                if (currentLineEnd == -1)
+                {
+                    currentLineEnd = TextField.Text.Length;
+                }
 
+                // Сохраняем текущую позицию курсора
+                int cursorPosition = TextField.SelectionStart;
 
-            // Сохраняем текущую позицию курсора
-            int cursorPosition = TextField.SelectionStart;
+                // Используем текущий индекс строки и индекс начала следующей строки, чтобы удалить всю текущую строку
+                TextField.Text = TextField.Text.Remove(currentLineStart, currentLineEnd - currentLineStart);
 
-
-
-            TextField.Text = TextField.Text.Remove(currentLineStart, currentLineEnd - currentLineStart);
-
-
-            // Восстанавливаем позицию курсора
-            if (cursorPosition >= currentLineStart)
-            {
-                if (cursorPosition <= currentLineEnd)
+                // Восстанавливаем позицию курсора
+                if (cursorPosition >= currentLineStart)
                 {
                     TextField.SelectionStart = currentLineStart;
                 }
                 else
                 {
-                    TextField.SelectionStart = cursorPosition - (currentLineEnd - currentLineStart);
+                    TextField.SelectionStart = cursorPosition;
                 }
             }
         }
+        private int GetPreviousLineStart(int currentLineIndex)
+        {
+            currentLineIndex--;
+            int currentLineStart = TextField.GetFirstCharIndexFromLine(currentLineIndex);
+            int nextLineStart = TextField.GetFirstCharIndexFromLine(currentLineIndex + 1);
+            if (nextLineStart == -1)
+            {
+                nextLineStart = TextField.Text.Length;
+            }
+            return currentLineStart;
+        }
+
         private void FnClear() { TextField.Clear(); }
         private void FnCopy()
         {
-            Clipboard.SetText(TextField.Text);
+            if(TextField.Text.Length > 0)
+            {
+                Clipboard.SetText(TextField.Text);
+            }
+            else
+            {
+                return;
+            }
+            
         }
         private void FnReset()
         {
             TextField.Text = "";
             maze.resetMap();
             parser = null;
+        }
+        private void FnInsert()
+        {
+            IDataObject clipboardData = Clipboard.GetDataObject();
+
+            if (clipboardData.GetDataPresent(DataFormats.Text))
+            {
+                string text = (string)clipboardData.GetData(DataFormats.Text);
+                TextField.SelectedText = text;
+            }
         }
 
         private void Delete_Click(object sender, EventArgs e)
@@ -225,18 +265,27 @@ namespace RobotFirstVersion
             if(button.Name == "Delete")
             {
                 FnDelete();
+                TextField.Focus();
             }
             if (button.Name == "Clear")
             {
                 FnClear();
+                TextField.Focus();
             }
             if (button.Name == "Reset")
             {
                 FnReset();
+                TextField.Focus();
             }
             if (button.Name == "Copy")
             {
                 FnCopy();
+                TextField.Focus();
+            }
+            if(button.Name == "Insert")
+            {
+                FnInsert();
+                TextField.Focus();
             }
         }
     }

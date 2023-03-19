@@ -12,33 +12,28 @@ namespace RobotFirstVersion
 {
     public partial class MainMenu : Form
     {
-        int[,] map = new int[,]
-        {
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1},
-            {1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1},
-            {1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1},
-            {1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1},
-            {1, 0, 1, 1, 1, 0, 3, 1, 0, 1, 0, 1},
-            {1, 0, 0, 0, 1, 0, 1, 1, 0, 3, 0, 1},
-            {1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        };
+        MapSelection mapSelect;
         public MainMenu()
         {
             InitializeComponent();
-            
+            mapSelect = new MapSelection();
+
         }
 
         private void Play_Click(object sender, EventArgs e)
         {
             Visible = false;
-            
-            Game game = new Game(map);
+
+            Game game = new Game(mapSelect.map, mapSelect.robotX, mapSelect.robotY);
             game.ShowDialog();
+            Visible = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Visible = false;
+            MapSelection mapSelection = new MapSelection();
+            mapSelect.ShowDialog();
             Visible = true;
         }
     }

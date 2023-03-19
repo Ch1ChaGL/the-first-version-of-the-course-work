@@ -33,3 +33,4 @@ E:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstV
 E:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.csproj.CoreCompileInputs.cache
 E:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.exe
 E:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.pdb
+F:\C#\Курсовая\RobotFirstVersion\RobotFirstVersion\obj\Debug\RobotFirstVersion.MapSelection.resources
