@@ -25,6 +25,7 @@ namespace RobotFirstVersion
             InitializeComponent();
             loadMap();
             map1.Image = pictureBoxList[currentMapIndex];
+            map1.Refresh();
             selectMap("standart1");
         }
 
@@ -109,11 +110,13 @@ namespace RobotFirstVersion
 
         private void UpdatePictureBox()
         {
+            Console.WriteLine($"currentMapIndex: {currentMapIndex}");
             map1.Image = pictureBoxList[currentMapIndex];
         }
 
         private void OK_Click(object sender, EventArgs e)
         {
+           
             selectMap(nameMap[currentMapIndex]);
         }
     }

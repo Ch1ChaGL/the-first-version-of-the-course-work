@@ -16,7 +16,7 @@ namespace RobotFirstVersion
         public MainMenu()
         {
             InitializeComponent();
-            mapSelect = new MapSelection();
+            
 
         }
 
@@ -32,7 +32,7 @@ namespace RobotFirstVersion
         private void button2_Click(object sender, EventArgs e)
         {
             Visible = false;
-            MapSelection mapSelection = new MapSelection();
+            mapSelect = new MapSelection();
             mapSelect.ShowDialog();
             Visible = true;
         }
