@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace RobotFirstVersion
 {
     public partial class RedactorMap : Form
@@ -52,9 +53,8 @@ namespace RobotFirstVersion
                     Bitmap mazeBitmap = new Bitmap(tempPictureBox.Width, tempPictureBox.Height); // создаем Bitmap для скриншота
                     tempPictureBox.DrawToBitmap(mazeBitmap, new Rectangle(0, 0, tempPictureBox.Width, tempPictureBox.Height)); // получаем скриншот
                     mazeBitmap.Save(imagePath, ImageFormat.Png); // сохраняем скриншот в файл с расширением .png
-                    Controls.Remove(tempPictureBox); // удаляем временный PictureBox со страницы
-
-                    Thread.Sleep(100);
+                    Controls.Remove(tempPictureBox); // удаляем временный PictureBox со 
+                    pictureBoxList.Add(new Bitmap(mazeBitmap));
                 }
                 else
                 {
