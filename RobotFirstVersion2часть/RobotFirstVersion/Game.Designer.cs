@@ -52,7 +52,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 42);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(630, 612);
+            this.pictureBox1.Size = new System.Drawing.Size(631, 631);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -133,35 +133,35 @@
             // Copy
             // 
             this.Copy.Name = "Copy";
-            this.Copy.Size = new System.Drawing.Size(180, 22);
+            this.Copy.Size = new System.Drawing.Size(107, 22);
             this.Copy.Text = "Copy";
             this.Copy.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // Delete
             // 
             this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(180, 22);
+            this.Delete.Size = new System.Drawing.Size(107, 22);
             this.Delete.Text = "Delete";
             this.Delete.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // Clear
             // 
             this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(180, 22);
+            this.Clear.Size = new System.Drawing.Size(107, 22);
             this.Clear.Text = "Clear";
             this.Clear.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // Reset
             // 
             this.Reset.Name = "Reset";
-            this.Reset.Size = new System.Drawing.Size(180, 22);
+            this.Reset.Size = new System.Drawing.Size(107, 22);
             this.Reset.Text = "Reset";
             this.Reset.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // Insert
             // 
             this.Insert.Name = "Insert";
-            this.Insert.Size = new System.Drawing.Size(180, 22);
+            this.Insert.Size = new System.Drawing.Size(107, 22);
             this.Insert.Text = "Insert";
             this.Insert.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 

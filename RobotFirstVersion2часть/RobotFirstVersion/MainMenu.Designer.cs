@@ -56,7 +56,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(247, 457);
+            this.button3.Location = new System.Drawing.Point(247, 462);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(292, 87);
             this.button3.TabIndex = 2;
@@ -78,7 +78,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(942, 592);
+            this.ClientSize = new System.Drawing.Size(956, 686);
             this.Controls.Add(this.RedactorMap);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);

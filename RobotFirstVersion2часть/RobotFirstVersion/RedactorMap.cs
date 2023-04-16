@@ -57,12 +57,8 @@ namespace RobotFirstVersion
                     pictureBoxList.Add(new Bitmap(mazeBitmap));
                 }
                 else
-                {
-                    using (var image = new Bitmap(imagePath))
-                    {
-                        pictureBoxList.Add(new Bitmap(image));
-                    }
-
+                {                                                         
+                   pictureBoxList.Add(new Bitmap(imagePath));                    
                 }
             }
         }
@@ -150,6 +146,7 @@ namespace RobotFirstVersion
                 string currentMapImagePath = Path.Combine(Application.StartupPath, "imageMap", $"{currentMapName}.png");
 
                 // Удалить изображение карты из списка pictureBoxList
+                pictureBoxList[currentMapIndex].Dispose();
                 pictureBoxList.RemoveAt(currentMapIndex);
 
                 // Удалить имя карты из списка nameMap
@@ -205,6 +202,32 @@ namespace RobotFirstVersion
         {
             int errorCode = Marshal.GetHRForException(exception) & ((1 << 16) - 1);
             return errorCode == 32 || errorCode == 33;
+        }
+
+        private void CreateMap_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CreateMazeBtn_Click(object sender, EventArgs e)
+        {
+            Visible = false;
+            CreateMaze createMaze = new CreateMaze();
+            createMaze.ShowDialog();
+            createMaze = null;
+            pictureBoxList.Clear();
+            nameMap.Clear();
+            loadMap();
+            Visible = true;
+        }
+
+        private void RedactorMap_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            pictureBox1.Image = null;
+            foreach(var bitmap in pictureBoxList)
+            {
+                bitmap.Dispose();
+            }
         }
     }
 }

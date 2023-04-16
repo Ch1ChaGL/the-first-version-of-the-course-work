@@ -52,6 +52,7 @@ namespace RobotFirstVersion
                     tempPictureBox.DrawToBitmap(mazeBitmap, new Rectangle(0, 0, tempPictureBox.Width, tempPictureBox.Height)); // получаем скриншот
                     mazeBitmap.Save(imagePath, ImageFormat.Png); // сохраняем скриншот в файл с расширением .png
                     Controls.Remove(tempPictureBox); // удаляем временный PictureBox со страницы
+                    pictureBoxList.Add(new Bitmap(mazeBitmap));
                 }
                 else
                 {
@@ -137,6 +138,15 @@ namespace RobotFirstVersion
             map1.Image = pictureBoxList[currentMapIndex];
             map1.Refresh();
 
+        }
+
+        private void MapSelection_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            map1.Image = null;
+            foreach(var bitmap in pictureBoxList)
+            {
+                bitmap.Dispose();
+            }
         }
     }
 }

@@ -96,6 +96,7 @@
             this.Controls.Add(this.map1);
             this.Name = "MapSelection";
             this.Text = "MapSelection";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapSelection_FormClosing);
             this.Load += new System.EventHandler(this.MapSelection_Load);
             ((System.ComponentModel.ISupportInitialize)(this.map1)).EndInit();
             this.ResumeLayout(false);

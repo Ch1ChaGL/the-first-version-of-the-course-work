@@ -26,15 +26,15 @@ namespace RobotFirstVersion
 
             Game game = new Game(mapSelect.map, mapSelect.robotX, mapSelect.robotY);
             game.ShowDialog();
+            mapSelect = new MapSelection();
             Visible = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Visible = false;
-       
+            mapSelect = new MapSelection();
             mapSelect.ShowDialog();
-            
             Visible = true;
         }
 
@@ -48,7 +48,13 @@ namespace RobotFirstVersion
             RedactorMap redactor = new RedactorMap();
             Visible = false;
             redactor.ShowDialog();
+            redactor = null;
             Visible = true;
+        }
+
+        private void CreateMazeBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
