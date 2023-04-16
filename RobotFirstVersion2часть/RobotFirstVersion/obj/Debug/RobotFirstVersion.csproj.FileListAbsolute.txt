@@ -88,3 +88,4 @@ C:\Users\User\Desktop\RobotFirstVersion2часть\RobotFirstVersion\obj\Debug\R
 C:\Users\User\Desktop\RobotFirstVersion2часть\RobotFirstVersion\obj\Debug\RobotFirstVersion.pdb
 C:\Users\User\Desktop\RobotFirstVersion2часть\RobotFirstVersion\obj\Debug\RobotFirstVersion.RedactorMap.resources
 C:\Users\User\Desktop\RobotFirstVersion2часть\RobotFirstVersion\obj\Debug\RobotFirstVersion.CreateMaze.resources
+C:\Users\User\Desktop\RobotFirstVersion2часть\RobotFirstVersion\obj\Debug\RobotFirstVersion.RedactMaze.resources

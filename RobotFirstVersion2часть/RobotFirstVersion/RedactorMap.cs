@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 
 namespace RobotFirstVersion
@@ -101,8 +102,8 @@ namespace RobotFirstVersion
         {
 
             loadMap();
-            
-            pictureBox1.Image = pictureBoxList[currentMapIndex];
+
+            pictureBox1.Image = pictureBoxList[0];
             pictureBox1.Refresh();
         }
         private void UpdatePictureBox()
@@ -228,6 +229,49 @@ namespace RobotFirstVersion
             {
                 bitmap.Dispose();
             }
+        }
+
+        private void RedactMap_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = null;
+            foreach (var bitmap in pictureBoxList)
+            {
+                bitmap.Dispose();
+            }
+            int[,] map;
+            string filePath = aPath + nameMap[currentMapIndex] + ".txt";
+            string currentMapName = nameMap[currentMapIndex];
+            string currentMapImagePath = Path.Combine(Application.StartupPath, "imageMap", $"{currentMapName}.png");
+            if (File.Exists(currentMapImagePath))
+            {
+                File.Delete(currentMapImagePath);
+            }
+            pictureBoxList.Clear();
+            nameMap.Clear();
+            if (File.Exists(filePath)) // Проверяем, существует ли файл
+            {
+                string[] lines = File.ReadAllLines(filePath); // Читаем все строки из файла
+                map = new int[lines.Length, lines[0].Length]; // Создаем двумерный массив для карты
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    for (int j = 0; j < lines[i].Length; j++)
+                    {
+                        int cellValue;
+                        if (int.TryParse(lines[i][j].ToString(), out cellValue))
+                        {                           
+                            map[i, j] = cellValue; // Преобразуем символы в числа и сохраняем в массив
+                        }
+                    }
+                }
+                Visible = false;
+                RedactMaze redactMaze = new RedactMaze(map, filePath);
+                redactMaze.ShowDialog();
+                loadMap();
+                pictureBox1.Image = pictureBoxList[0];
+                Visible = true;
+            }
+            
         }
     }
 }

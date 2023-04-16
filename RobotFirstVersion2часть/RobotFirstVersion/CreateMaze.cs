@@ -16,12 +16,13 @@ namespace RobotFirstVersion
     {
         Robot robot = new Robot(1, 1);
         Maze maze;
-        int[,] map;
+        int[,] map = null;
         public CreateMaze()
         {
             InitializeComponent();
             pictureBox1.MouseDown += pictureBox1_MouseDown;
         }
+      
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             // Проверяем, что кнопка "wall" нажата
@@ -163,7 +164,6 @@ namespace RobotFirstVersion
             // Сохраняем карту в файл
             using (StreamWriter sw = new StreamWriter("map/" + fileName))
             {
-                // Записываем ячейки карты с рамкой из единиц
                 for (int i = 0; i < map.GetLength(0); i++)
                 {
                     for (int j = 0; j < map.GetLength(1); j++)

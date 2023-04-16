@@ -58,12 +58,13 @@
             // 
             // RedactMap
             // 
-            this.RedactMap.Location = new System.Drawing.Point(413, 526);
+            this.RedactMap.Location = new System.Drawing.Point(377, 526);
             this.RedactMap.Name = "RedactMap";
-            this.RedactMap.Size = new System.Drawing.Size(105, 62);
+            this.RedactMap.Size = new System.Drawing.Size(141, 62);
             this.RedactMap.TabIndex = 2;
             this.RedactMap.Text = "Редактировать карту";
             this.RedactMap.UseVisualStyleBackColor = true;
+            this.RedactMap.Click += new System.EventHandler(this.RedactMap_Click);
             // 
             // Next
             // 
@@ -87,7 +88,7 @@
             // 
             // CreateMazeBtn
             // 
-            this.CreateMazeBtn.Location = new System.Drawing.Point(632, 526);
+            this.CreateMazeBtn.Location = new System.Drawing.Point(605, 526);
             this.CreateMazeBtn.Name = "CreateMazeBtn";
             this.CreateMazeBtn.Size = new System.Drawing.Size(103, 62);
             this.CreateMazeBtn.TabIndex = 6;
