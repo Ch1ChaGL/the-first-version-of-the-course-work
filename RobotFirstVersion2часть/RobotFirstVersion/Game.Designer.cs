@@ -44,8 +44,23 @@
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nextStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ifBtn = new System.Windows.Forms.Button();
+            this.not = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.upIf = new System.Windows.Forms.RadioButton();
+            this.downIf = new System.Windows.Forms.RadioButton();
+            this.leftIf = new System.Windows.Forms.RadioButton();
+            this.rightIf = new System.Windows.Forms.RadioButton();
+            this.freeIf = new System.Windows.Forms.RadioButton();
+            this.notFreeIf = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.insertIf = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -67,7 +82,7 @@
             // 
             // Up
             // 
-            this.Up.Location = new System.Drawing.Point(878, 498);
+            this.Up.Location = new System.Drawing.Point(747, 499);
             this.Up.Name = "Up";
             this.Up.Size = new System.Drawing.Size(68, 41);
             this.Up.TabIndex = 2;
@@ -77,7 +92,7 @@
             // 
             // Down
             // 
-            this.Down.Location = new System.Drawing.Point(878, 597);
+            this.Down.Location = new System.Drawing.Point(747, 595);
             this.Down.Name = "Down";
             this.Down.Size = new System.Drawing.Size(68, 41);
             this.Down.TabIndex = 3;
@@ -87,7 +102,7 @@
             // 
             // Left
             // 
-            this.Left.Location = new System.Drawing.Point(803, 548);
+            this.Left.Location = new System.Drawing.Point(680, 548);
             this.Left.Name = "Left";
             this.Left.Size = new System.Drawing.Size(65, 41);
             this.Left.TabIndex = 4;
@@ -97,7 +112,7 @@
             // 
             // Right
             // 
-            this.Right.Location = new System.Drawing.Point(956, 548);
+            this.Right.Location = new System.Drawing.Point(820, 548);
             this.Right.Name = "Right";
             this.Right.Size = new System.Drawing.Size(63, 41);
             this.Right.TabIndex = 5;
@@ -114,7 +129,7 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1202, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1520, 24);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -186,11 +201,145 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // ifBtn
+            // 
+            this.ifBtn.Location = new System.Drawing.Point(917, 548);
+            this.ifBtn.Name = "ifBtn";
+            this.ifBtn.Size = new System.Drawing.Size(75, 41);
+            this.ifBtn.TabIndex = 14;
+            this.ifBtn.Text = "If";
+            this.ifBtn.UseVisualStyleBackColor = true;
+            this.ifBtn.Click += new System.EventHandler(this.ifBtn_Click);
+            // 
+            // not
+            // 
+            this.not.Location = new System.Drawing.Point(1020, 548);
+            this.not.Name = "not";
+            this.not.Size = new System.Drawing.Size(72, 41);
+            this.not.TabIndex = 15;
+            this.not.Text = "!";
+            this.not.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.insertIf);
+            this.groupBox1.Controls.Add(this.groupBox3);
+            this.groupBox1.Controls.Add(this.groupBox2);
+            this.groupBox1.Location = new System.Drawing.Point(1196, 27);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(324, 259);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Если";
+            // 
+            // upIf
+            // 
+            this.upIf.AutoSize = true;
+            this.upIf.Location = new System.Drawing.Point(6, 24);
+            this.upIf.Name = "upIf";
+            this.upIf.Size = new System.Drawing.Size(49, 17);
+            this.upIf.TabIndex = 0;
+            this.upIf.TabStop = true;
+            this.upIf.Text = "Верх";
+            this.upIf.UseVisualStyleBackColor = true;
+            // 
+            // downIf
+            // 
+            this.downIf.AutoSize = true;
+            this.downIf.Location = new System.Drawing.Point(6, 47);
+            this.downIf.Name = "downIf";
+            this.downIf.Size = new System.Drawing.Size(45, 17);
+            this.downIf.TabIndex = 1;
+            this.downIf.TabStop = true;
+            this.downIf.Text = "Низ";
+            this.downIf.UseVisualStyleBackColor = true;
+            // 
+            // leftIf
+            // 
+            this.leftIf.AutoSize = true;
+            this.leftIf.Location = new System.Drawing.Point(6, 70);
+            this.leftIf.Name = "leftIf";
+            this.leftIf.Size = new System.Drawing.Size(51, 17);
+            this.leftIf.TabIndex = 2;
+            this.leftIf.TabStop = true;
+            this.leftIf.Text = "Лево";
+            this.leftIf.UseVisualStyleBackColor = true;
+            // 
+            // rightIf
+            // 
+            this.rightIf.AutoSize = true;
+            this.rightIf.Location = new System.Drawing.Point(6, 93);
+            this.rightIf.Name = "rightIf";
+            this.rightIf.Size = new System.Drawing.Size(57, 17);
+            this.rightIf.TabIndex = 3;
+            this.rightIf.TabStop = true;
+            this.rightIf.Text = "Право";
+            this.rightIf.UseVisualStyleBackColor = true;
+            // 
+            // freeIf
+            // 
+            this.freeIf.AutoSize = true;
+            this.freeIf.Location = new System.Drawing.Point(16, 24);
+            this.freeIf.Name = "freeIf";
+            this.freeIf.Size = new System.Drawing.Size(73, 17);
+            this.freeIf.TabIndex = 4;
+            this.freeIf.TabStop = true;
+            this.freeIf.Text = "свободно";
+            this.freeIf.UseVisualStyleBackColor = true;
+            // 
+            // notFreeIf
+            // 
+            this.notFreeIf.AutoSize = true;
+            this.notFreeIf.Location = new System.Drawing.Point(16, 47);
+            this.notFreeIf.Name = "notFreeIf";
+            this.notFreeIf.Size = new System.Drawing.Size(90, 17);
+            this.notFreeIf.TabIndex = 5;
+            this.notFreeIf.TabStop = true;
+            this.notFreeIf.Text = "Не свободно";
+            this.notFreeIf.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.freeIf);
+            this.groupBox2.Controls.Add(this.notFreeIf);
+            this.groupBox2.Location = new System.Drawing.Point(25, 32);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(195, 81);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Условие";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.upIf);
+            this.groupBox3.Controls.Add(this.downIf);
+            this.groupBox3.Controls.Add(this.rightIf);
+            this.groupBox3.Controls.Add(this.leftIf);
+            this.groupBox3.Location = new System.Drawing.Point(25, 120);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(195, 119);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Направление";
+            // 
+            // insertIf
+            // 
+            this.insertIf.Location = new System.Drawing.Point(237, 207);
+            this.insertIf.Name = "insertIf";
+            this.insertIf.Size = new System.Drawing.Size(75, 23);
+            this.insertIf.TabIndex = 8;
+            this.insertIf.Text = "Вставить";
+            this.insertIf.UseVisualStyleBackColor = true;
+            this.insertIf.Click += new System.EventHandler(this.insertIf_Click);
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1202, 689);
+            this.ClientSize = new System.Drawing.Size(1520, 689);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.not);
+            this.Controls.Add(this.ifBtn);
             this.Controls.Add(this.Right);
             this.Controls.Add(this.Left);
             this.Controls.Add(this.Down);
@@ -204,6 +353,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,5 +381,17 @@
         private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nextStepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.Button ifBtn;
+        private System.Windows.Forms.Button not;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button insertIf;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton upIf;
+        private System.Windows.Forms.RadioButton downIf;
+        private System.Windows.Forms.RadioButton rightIf;
+        private System.Windows.Forms.RadioButton leftIf;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton freeIf;
+        private System.Windows.Forms.RadioButton notFreeIf;
     }
 }

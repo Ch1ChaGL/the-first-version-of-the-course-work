@@ -34,6 +34,7 @@
             this.Next = new System.Windows.Forms.Button();
             this.Back = new System.Windows.Forms.Button();
             this.CreateMazeBtn = new System.Windows.Forms.Button();
+            this.NameMaze = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,11 +97,21 @@
             this.CreateMazeBtn.UseVisualStyleBackColor = true;
             this.CreateMazeBtn.Click += new System.EventHandler(this.CreateMazeBtn_Click);
             // 
+            // NameMaze
+            // 
+            this.NameMaze.AutoSize = true;
+            this.NameMaze.Location = new System.Drawing.Point(63, 172);
+            this.NameMaze.Name = "NameMaze";
+            this.NameMaze.Size = new System.Drawing.Size(35, 13);
+            this.NameMaze.TabIndex = 7;
+            this.NameMaze.Text = "label1";
+            // 
             // RedactorMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 621);
+            this.Controls.Add(this.NameMaze);
             this.Controls.Add(this.CreateMazeBtn);
             this.Controls.Add(this.Back);
             this.Controls.Add(this.Next);
@@ -113,6 +124,7 @@
             this.Load += new System.EventHandler(this.RedactorMap_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -124,5 +136,6 @@
         private System.Windows.Forms.Button Next;
         private System.Windows.Forms.Button Back;
         private System.Windows.Forms.Button CreateMazeBtn;
+        private System.Windows.Forms.Label NameMaze;
     }
 }

@@ -84,8 +84,8 @@ namespace RobotFirstVersion
                 {
                     if (map[i,j] == 2)
                     {
-                        robot.y = j;
-                        robot.x = i;
+                        robot.x = j;
+                        robot.y = i;
                     }
                 }
             }

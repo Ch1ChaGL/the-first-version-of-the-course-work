@@ -103,7 +103,8 @@ namespace RobotFirstVersion
 
             loadMap();
 
-            pictureBox1.Image = pictureBoxList[0];
+            pictureBox1.Image = pictureBoxList[currentMapIndex];
+            NameMaze.Text = nameMap[currentMapIndex];
             pictureBox1.Refresh();
         }
         private void UpdatePictureBox()
@@ -122,7 +123,7 @@ namespace RobotFirstVersion
                 {
                     currentMapIndex = pictureBoxList.Count - 1;
                 }
-               // NameMaze.Text = nameMap[currentMapIndex];
+               NameMaze.Text = nameMap[currentMapIndex];
                 UpdatePictureBox();
             }
             if (btn.Name == "Back")
@@ -132,7 +133,7 @@ namespace RobotFirstVersion
                 {
                     currentMapIndex = 0;
                 }
-                //NameMaze.Text = nameMap[currentMapIndex];
+                NameMaze.Text = nameMap[currentMapIndex];
                 UpdatePictureBox();
             }
         }
@@ -205,10 +206,6 @@ namespace RobotFirstVersion
             return errorCode == 32 || errorCode == 33;
         }
 
-        private void CreateMap_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void CreateMazeBtn_Click(object sender, EventArgs e)
         {
@@ -268,7 +265,8 @@ namespace RobotFirstVersion
                 RedactMaze redactMaze = new RedactMaze(map, filePath);
                 redactMaze.ShowDialog();
                 loadMap();
-                pictureBox1.Image = pictureBoxList[0];
+                pictureBox1.Image = pictureBoxList[currentMapIndex];
+                NameMaze.Text = nameMap[currentMapIndex];
                 Visible = true;
             }
             
