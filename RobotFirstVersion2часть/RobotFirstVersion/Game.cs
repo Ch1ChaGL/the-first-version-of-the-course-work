@@ -119,6 +119,49 @@ namespace RobotFirstVersion
             }
         }
 
+        //private void Up_Click(object sender, EventArgs e)
+        //{
+        //    string direction = "";
+        //    var button = sender as Button;
+        //    if (button.Name == "Up")
+        //    {
+        //        direction = "Вверх\n";
+        //    }
+        //    if (button.Name == "Left")
+        //    {
+        //        direction = "Влево\n";
+        //    }
+        //    if (button.Name == "Down")
+        //    {
+        //        direction = "Вниз\n";
+        //    }
+        //    if (button.Name == "Right")
+        //    {
+        //        direction = "Вправо\n";
+        //    }
+
+        //    Получаем номер строки, на которой находится курсор
+        //    int currentLineIndex = TextField.GetLineFromCharIndex(TextField.SelectionStart);
+
+        //    Находим начало следующей строки
+        //    int nextLineStart = TextField.GetFirstCharIndexFromLine(currentLineIndex + 1);
+        //    if (nextLineStart == -1)
+        //    {
+        //        Если следующей строки нет, то добавляем слово в конец текста
+        //       nextLineStart = TextField.Text.Length;
+        //    }
+
+
+        //    Добавляем слово на позицию nextLineStart
+        //    TextField.Text = TextField.Text.Insert(nextLineStart, direction);
+
+        //    Перемещаем курсор в конец добавленного слова
+        //    TextField.SelectionStart = nextLineStart + direction.Length;
+
+        //    Перемещаем фокус на текстовое поле
+        //    TextField.Focus();
+        //}
+
         private void Up_Click(object sender, EventArgs e)
         {
             string direction = "";
@@ -151,17 +194,30 @@ namespace RobotFirstVersion
                 nextLineStart = TextField.Text.Length;
             }
 
+            // Вычисляем отступы
+            int openBrackets = 0;
+            for (int i = 0; i < nextLineStart; i++)
+            {
+                if (TextField.Text[i] == '{')
+                {
+                    openBrackets++;
+                }
+                else if (TextField.Text[i] == '}')
+                {
+                    openBrackets--;
+                }
+            }
+            string indentation = new string(' ', openBrackets * 4);
 
-            // Добавляем слово на позицию nextLineStart
-            TextField.Text = TextField.Text.Insert(nextLineStart, direction);
+            // Добавляем слово на позицию nextLineStart с отступами
+            TextField.Text = TextField.Text.Insert(nextLineStart, indentation + direction);
 
             // Перемещаем курсор в конец добавленного слова
-            TextField.SelectionStart = nextLineStart + direction.Length;
+            TextField.SelectionStart = nextLineStart + indentation.Length + direction.Length;
 
             // Перемещаем фокус на текстовое поле
             TextField.Focus();
         }
-
 
 
 
@@ -494,11 +550,94 @@ namespace RobotFirstVersion
 
 
 
+        //private void insertIf_Click(object sender, EventArgs e)
+        //{
+        //    string direction = "";
+        //    var button = sender as RadioButton;
+
+        //    // Получаем выбранное направление
+        //    if (upIf.Checked)
+        //    {
+        //        direction = "Вверх";
+        //    }
+        //    else if (downIf.Checked)
+        //    {
+        //        direction = "Вниз";
+        //    }
+        //    else if (leftIf.Checked)
+        //    {
+        //        direction = "Влево";
+        //    }
+        //    else if (rightIf.Checked)
+        //    {
+        //        direction = "Вправо";
+        //    }
+
+        //    // Получаем тип условия
+        //    string condition = "";
+        //    if (freeIf.Checked)
+        //    {
+        //        condition = "";
+        //    }
+        //    else if (notFreeIf.Checked)
+        //    {
+        //        condition = "!";
+        //    }
+
+        //    // Вставляем команду в текстовое поле
+        //    int position = TextField.GetFirstCharIndexOfCurrentLine();
+
+        //    int openBrackets = 0;
+        //    if (string.IsNullOrWhiteSpace(TextField.Text))
+        //    {
+        //        TextField.Text = "if(" + condition + direction + ")\n{\n\n}\n";
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < position; i++)
+        //        {
+        //            if (TextField.Text[i] == '{')
+        //            {
+        //                openBrackets++;
+        //            }
+        //            else if (TextField.Text[i] == '}')
+        //            {
+        //                openBrackets--;
+        //            }
+        //        }
+
+        //        string indentation = new string(' ', openBrackets * 4);
+
+        //        int lineIndex = TextField.GetLineFromCharIndex(position);
+        //        if (lineIndex < TextField.Lines.Length - 1 && TextField.Lines[lineIndex].TrimEnd().EndsWith("}"))
+        //        {
+        //            // Вставляем блок на следующей строке после скобки
+        //            position = TextField.GetFirstCharIndexFromLine(lineIndex + 1);
+        //            TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+        //        }
+        //        else
+        //        {
+        //            // Вставляем блок на текущей строке
+        //            if (string.IsNullOrWhiteSpace(TextField.Lines[TextField.GetLineFromCharIndex(position)]))
+        //            {
+        //                TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+        //            }
+        //            else
+        //            {
+        //                TextField.Text = TextField.Text.Insert(position, "\n" + indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+        //            }
+        //        }
+        //    }
+
+        //    TextField.SelectionStart = position + 3 + condition.Length + direction.Length + 4 * openBrackets + 4;
+        //    TextField.Focus();
+        //}
+
+
         private void insertIf_Click(object sender, EventArgs e)
         {
             string direction = "";
-            var button = sender as RadioButton;
-
+            
             // Получаем выбранное направление
             if (upIf.Checked)
             {
@@ -534,7 +673,7 @@ namespace RobotFirstVersion
             int openBrackets = 0;
             if (string.IsNullOrWhiteSpace(TextField.Text))
             {
-                TextField.Text = "if(" + condition + direction + ")\n{\n\n}\n";
+                TextField.Text = "if(" + condition + direction + ")\n{\n\n}\nelse\n{\n\n}\n";
             }
             else
             {
@@ -557,34 +696,106 @@ namespace RobotFirstVersion
                 {
                     // Вставляем блок на следующей строке после скобки
                     position = TextField.GetFirstCharIndexFromLine(lineIndex + 1);
-                    TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+                    TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n" + indentation + "else\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
                 }
                 else
                 {
                     // Вставляем блок на текущей строке
                     if (string.IsNullOrWhiteSpace(TextField.Lines[TextField.GetLineFromCharIndex(position)]))
                     {
-                        TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+                        TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n" + indentation + "else\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
                     }
                     else
                     {
-                        TextField.Text = TextField.Text.Insert(position, "\n" + indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+                        TextField.Text = TextField.Text.Insert(position, "\n" + indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n" + indentation + "else\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
                     }
                 }
             }
 
-            TextField.SelectionStart = position + 3 + condition.Length + direction.Length + 4 * openBrackets + 4;
+            TextField.SelectionStart = position + 3 + condition.Length + direction.Length + 4 * openBrackets + 12;
             TextField.Focus();
         }
 
+        private void insertWhile_Click(object sender, EventArgs e)
+        {
+            string direction = "";
 
+            // Получаем выбранное направление
+            if (upWhile.Checked)
+            {
+                direction = "Вверх";
+            }
+            else if (downWhile.Checked)
+            {
+                direction = "Вниз";
+            }
+            else if (leftWhile.Checked)
+            {
+                direction = "Влево";
+            }
+            else if (rightWhile.Checked)
+            {
+                direction = "Вправо";
+            }
 
+            // Получаем тип условия
+            string condition = "";
+            if (freeWhile.Checked)
+            {
+                condition = "";
+            }
+            else if (notFreeWhile.Checked)
+            {
+                condition = "!";
+            }
 
+            // Вставляем команду в текстовое поле
+            int position = TextField.GetFirstCharIndexOfCurrentLine();
 
+            int openBrackets = 0;
+            if (string.IsNullOrWhiteSpace(TextField.Text))
+            {
+                TextField.Text = "While(" + condition + direction + ")\n{\n\n}\n";
+            }
+            else
+            {
+                for (int i = 0; i < position; i++)
+                {
+                    if (TextField.Text[i] == '{')
+                    {
+                        openBrackets++;
+                    }
+                    else if (TextField.Text[i] == '}')
+                    {
+                        openBrackets--;
+                    }
+                }
 
+                string indentation = new string(' ', openBrackets * 4);
 
+                int lineIndex = TextField.GetLineFromCharIndex(position);
+                if (lineIndex < TextField.Lines.Length - 1 && TextField.Lines[lineIndex].TrimEnd().EndsWith("}"))
+                {
+                    // Вставляем блок на следующей строке после скобки
+                    position = TextField.GetFirstCharIndexFromLine(lineIndex + 1);
+                    TextField.Text = TextField.Text.Insert(position, indentation + "While(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+                }
+                else
+                {
+                    // Вставляем блок на текущей строке
+                    if (string.IsNullOrWhiteSpace(TextField.Lines[TextField.GetLineFromCharIndex(position)]))
+                    {
+                        TextField.Text = TextField.Text.Insert(position, indentation + "While(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+                    }
+                    else
+                    {
+                        TextField.Text = TextField.Text.Insert(position, "\n" + indentation + "While(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
+                    }
+                }
+            }
 
-
-
+            TextField.SelectionStart = position + 3 + condition.Length + direction.Length + 4 * openBrackets + 12;
+            TextField.Focus();
+        }
     }
 }

@@ -47,20 +47,33 @@
             this.ifBtn = new System.Windows.Forms.Button();
             this.not = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.insertIf = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.upIf = new System.Windows.Forms.RadioButton();
             this.downIf = new System.Windows.Forms.RadioButton();
-            this.leftIf = new System.Windows.Forms.RadioButton();
             this.rightIf = new System.Windows.Forms.RadioButton();
+            this.leftIf = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.freeIf = new System.Windows.Forms.RadioButton();
             this.notFreeIf = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.insertIf = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.freeWhile = new System.Windows.Forms.RadioButton();
+            this.notFreeWhile = new System.Windows.Forms.RadioButton();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.upWhile = new System.Windows.Forms.RadioButton();
+            this.downWhile = new System.Windows.Forms.RadioButton();
+            this.rightWhile = new System.Windows.Forms.RadioButton();
+            this.leftWhile = new System.Windows.Forms.RadioButton();
+            this.insertWhile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -232,6 +245,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Если";
             // 
+            // insertIf
+            // 
+            this.insertIf.Location = new System.Drawing.Point(237, 207);
+            this.insertIf.Name = "insertIf";
+            this.insertIf.Size = new System.Drawing.Size(75, 23);
+            this.insertIf.TabIndex = 8;
+            this.insertIf.Text = "Вставить";
+            this.insertIf.UseVisualStyleBackColor = true;
+            this.insertIf.Click += new System.EventHandler(this.insertIf_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.upIf);
+            this.groupBox3.Controls.Add(this.downIf);
+            this.groupBox3.Controls.Add(this.rightIf);
+            this.groupBox3.Controls.Add(this.leftIf);
+            this.groupBox3.Location = new System.Drawing.Point(25, 120);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(195, 119);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Направление";
+            // 
             // upIf
             // 
             this.upIf.AutoSize = true;
@@ -254,6 +290,17 @@
             this.downIf.Text = "Низ";
             this.downIf.UseVisualStyleBackColor = true;
             // 
+            // rightIf
+            // 
+            this.rightIf.AutoSize = true;
+            this.rightIf.Location = new System.Drawing.Point(6, 93);
+            this.rightIf.Name = "rightIf";
+            this.rightIf.Size = new System.Drawing.Size(57, 17);
+            this.rightIf.TabIndex = 3;
+            this.rightIf.TabStop = true;
+            this.rightIf.Text = "Право";
+            this.rightIf.UseVisualStyleBackColor = true;
+            // 
             // leftIf
             // 
             this.leftIf.AutoSize = true;
@@ -265,16 +312,16 @@
             this.leftIf.Text = "Лево";
             this.leftIf.UseVisualStyleBackColor = true;
             // 
-            // rightIf
+            // groupBox2
             // 
-            this.rightIf.AutoSize = true;
-            this.rightIf.Location = new System.Drawing.Point(6, 93);
-            this.rightIf.Name = "rightIf";
-            this.rightIf.Size = new System.Drawing.Size(57, 17);
-            this.rightIf.TabIndex = 3;
-            this.rightIf.TabStop = true;
-            this.rightIf.Text = "Право";
-            this.rightIf.UseVisualStyleBackColor = true;
+            this.groupBox2.Controls.Add(this.freeIf);
+            this.groupBox2.Controls.Add(this.notFreeIf);
+            this.groupBox2.Location = new System.Drawing.Point(25, 32);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(195, 81);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Условие";
             // 
             // freeIf
             // 
@@ -298,45 +345,124 @@
             this.notFreeIf.Text = "Не свободно";
             this.notFreeIf.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // groupBox4
             // 
-            this.groupBox2.Controls.Add(this.freeIf);
-            this.groupBox2.Controls.Add(this.notFreeIf);
-            this.groupBox2.Location = new System.Drawing.Point(25, 32);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(195, 81);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Условие";
+            this.groupBox4.Controls.Add(this.insertWhile);
+            this.groupBox4.Controls.Add(this.groupBox6);
+            this.groupBox4.Controls.Add(this.groupBox5);
+            this.groupBox4.Location = new System.Drawing.Point(1197, 312);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(311, 277);
+            this.groupBox4.TabIndex = 17;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Пока";
             // 
-            // groupBox3
+            // groupBox5
             // 
-            this.groupBox3.Controls.Add(this.upIf);
-            this.groupBox3.Controls.Add(this.downIf);
-            this.groupBox3.Controls.Add(this.rightIf);
-            this.groupBox3.Controls.Add(this.leftIf);
-            this.groupBox3.Location = new System.Drawing.Point(25, 120);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(195, 119);
-            this.groupBox3.TabIndex = 7;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Направление";
+            this.groupBox5.Controls.Add(this.freeWhile);
+            this.groupBox5.Controls.Add(this.notFreeWhile);
+            this.groupBox5.Location = new System.Drawing.Point(24, 28);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(195, 81);
+            this.groupBox5.TabIndex = 7;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Условие";
             // 
-            // insertIf
+            // freeWhile
             // 
-            this.insertIf.Location = new System.Drawing.Point(237, 207);
-            this.insertIf.Name = "insertIf";
-            this.insertIf.Size = new System.Drawing.Size(75, 23);
-            this.insertIf.TabIndex = 8;
-            this.insertIf.Text = "Вставить";
-            this.insertIf.UseVisualStyleBackColor = true;
-            this.insertIf.Click += new System.EventHandler(this.insertIf_Click);
+            this.freeWhile.AutoSize = true;
+            this.freeWhile.Location = new System.Drawing.Point(16, 24);
+            this.freeWhile.Name = "freeWhile";
+            this.freeWhile.Size = new System.Drawing.Size(73, 17);
+            this.freeWhile.TabIndex = 4;
+            this.freeWhile.TabStop = true;
+            this.freeWhile.Text = "свободно";
+            this.freeWhile.UseVisualStyleBackColor = true;
+            // 
+            // notFreeWhile
+            // 
+            this.notFreeWhile.AutoSize = true;
+            this.notFreeWhile.Location = new System.Drawing.Point(16, 47);
+            this.notFreeWhile.Name = "notFreeWhile";
+            this.notFreeWhile.Size = new System.Drawing.Size(90, 17);
+            this.notFreeWhile.TabIndex = 5;
+            this.notFreeWhile.TabStop = true;
+            this.notFreeWhile.Text = "Не свободно";
+            this.notFreeWhile.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.upWhile);
+            this.groupBox6.Controls.Add(this.downWhile);
+            this.groupBox6.Controls.Add(this.rightWhile);
+            this.groupBox6.Controls.Add(this.leftWhile);
+            this.groupBox6.Location = new System.Drawing.Point(24, 128);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(195, 119);
+            this.groupBox6.TabIndex = 8;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Направление";
+            // 
+            // upWhile
+            // 
+            this.upWhile.AutoSize = true;
+            this.upWhile.Location = new System.Drawing.Point(6, 24);
+            this.upWhile.Name = "upWhile";
+            this.upWhile.Size = new System.Drawing.Size(49, 17);
+            this.upWhile.TabIndex = 0;
+            this.upWhile.TabStop = true;
+            this.upWhile.Text = "Верх";
+            this.upWhile.UseVisualStyleBackColor = true;
+            // 
+            // downWhile
+            // 
+            this.downWhile.AutoSize = true;
+            this.downWhile.Location = new System.Drawing.Point(6, 47);
+            this.downWhile.Name = "downWhile";
+            this.downWhile.Size = new System.Drawing.Size(45, 17);
+            this.downWhile.TabIndex = 1;
+            this.downWhile.TabStop = true;
+            this.downWhile.Text = "Низ";
+            this.downWhile.UseVisualStyleBackColor = true;
+            // 
+            // rightWhile
+            // 
+            this.rightWhile.AutoSize = true;
+            this.rightWhile.Location = new System.Drawing.Point(6, 93);
+            this.rightWhile.Name = "rightWhile";
+            this.rightWhile.Size = new System.Drawing.Size(57, 17);
+            this.rightWhile.TabIndex = 3;
+            this.rightWhile.TabStop = true;
+            this.rightWhile.Text = "Право";
+            this.rightWhile.UseVisualStyleBackColor = true;
+            // 
+            // leftWhile
+            // 
+            this.leftWhile.AutoSize = true;
+            this.leftWhile.Location = new System.Drawing.Point(6, 70);
+            this.leftWhile.Name = "leftWhile";
+            this.leftWhile.Size = new System.Drawing.Size(51, 17);
+            this.leftWhile.TabIndex = 2;
+            this.leftWhile.TabStop = true;
+            this.leftWhile.Text = "Лево";
+            this.leftWhile.UseVisualStyleBackColor = true;
+            // 
+            // insertWhile
+            // 
+            this.insertWhile.Location = new System.Drawing.Point(230, 215);
+            this.insertWhile.Name = "insertWhile";
+            this.insertWhile.Size = new System.Drawing.Size(75, 23);
+            this.insertWhile.TabIndex = 9;
+            this.insertWhile.Text = "Вставить";
+            this.insertWhile.UseVisualStyleBackColor = true;
+            this.insertWhile.Click += new System.EventHandler(this.insertWhile_Click);
             // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 689);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.not);
             this.Controls.Add(this.ifBtn);
@@ -354,10 +480,15 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -393,5 +524,15 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton freeIf;
         private System.Windows.Forms.RadioButton notFreeIf;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button insertWhile;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.RadioButton upWhile;
+        private System.Windows.Forms.RadioButton downWhile;
+        private System.Windows.Forms.RadioButton rightWhile;
+        private System.Windows.Forms.RadioButton leftWhile;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.RadioButton freeWhile;
+        private System.Windows.Forms.RadioButton notFreeWhile;
     }
 }

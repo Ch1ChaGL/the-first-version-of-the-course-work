@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandBlock.cs" />
     <Compile Include="CommandInterpreter.cs" />
     <Compile Include="CreateMaze.cs">
       <SubType>Form</SubType>
