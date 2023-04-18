@@ -139,6 +139,23 @@ namespace RobotFirstVersion
                             ParseCommandBlock(nestedBlock.NestedBlocks[1], robot, maze);
                         }
                         break;
+                    case CommandBlockType.Else:
+                        foreach (var commandBlock in nestedBlock.NestedBlocks)
+                        {
+                            if (commandBlock.Type == CommandBlockType.Command)
+                            {
+                                if (robot.checkRobotStatus() == 1)
+                                {
+                                    return;
+                                }
+                                _interpreter.interpret(commandBlock.Value, robot);
+                            }
+                            else
+                            {
+                                ParseCommandBlock(commandBlock, robot, maze);
+                            }
+                        }
+                        break;
                     case CommandBlockType.While:
                         while (CheckWhileCondition(nestedBlock, robot, maze))
                         {
