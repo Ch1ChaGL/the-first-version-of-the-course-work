@@ -381,7 +381,7 @@ namespace RobotFirstVersion
         private void playToolStripMenuItem_Click(object sender, EventArgs e)
         {
             parser = new ParserCommand(TextField.Text);
-            result(parser.ParseAll(robot));
+            result(parser.ParseAll(robot, maze));
         }
 
         private void nextStepToolStripMenuItem_Click(object sender, EventArgs e)

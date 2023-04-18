@@ -56,5 +56,6 @@ namespace RobotFirstVersion
         {
             return maze.checkСell(x, y);
         }
+        
     }
 }
