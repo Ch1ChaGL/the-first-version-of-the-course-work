@@ -84,39 +84,40 @@ namespace RobotFirstVersion
 
         private void TextField_KeyDown(object sender, KeyEventArgs e)
         {
-            e.SuppressKeyPress = true;
-            if (e.Control && e.KeyCode == Keys.V)
-            {
+            
+            //e.SuppressKeyPress = true;
+            //if (e.Control && e.KeyCode == Keys.V)
+            //{
 
-                IDataObject clipboardData = Clipboard.GetDataObject();
+            //    IDataObject clipboardData = Clipboard.GetDataObject();
 
-                if (clipboardData.GetDataPresent(DataFormats.UnicodeText))
-                {
-                    string text = (string)clipboardData.GetData(DataFormats.UnicodeText);
-                    TextField.SelectedText = text;
-                }
+            //    if (clipboardData.GetDataPresent(DataFormats.UnicodeText))
+            //    {
+            //        string text = (string)clipboardData.GetData(DataFormats.UnicodeText);
+            //        TextField.SelectedText = text;
+            //    }
 
-                // Предотвращаем вставку остальных данных из буфера обмена
-                e.Handled = true;
-
-
-            }
-            if (TextField.Text.Length > 0)
-            {
-                if (e.Control && e.KeyCode == Keys.C)
-                {
-                    Clipboard.SetText(TextField.SelectedText);
-                    e.Handled = true;
-                }
-                else if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
-                {
-                    FnDelete();
-                    e.Handled = true;
-                }
+            //    // Предотвращаем вставку остальных данных из буфера обмена
+            //    e.Handled = true;
 
 
+            //}
+            //if (TextField.Text.Length > 0)
+            //{
+            //    if (e.Control && e.KeyCode == Keys.C)
+            //    {
+            //        Clipboard.SetText(TextField.SelectedText);
+            //        e.Handled = true;
+            //    }
+            //    else if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
+            //    {
+            //        FnDelete();
+            //        e.Handled = true;
+            //    }
 
-            }
+
+
+            //}
         }
 
         //private void Up_Click(object sender, EventArgs e)
@@ -796,6 +797,14 @@ namespace RobotFirstVersion
 
             TextField.SelectionStart = position + 3 + condition.Length + direction.Length + 4 * openBrackets + 12;
             TextField.Focus();
+        }
+
+        private void TextField_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 9)
+            {
+                e.Handled = false;
+            }
         }
     }
 }

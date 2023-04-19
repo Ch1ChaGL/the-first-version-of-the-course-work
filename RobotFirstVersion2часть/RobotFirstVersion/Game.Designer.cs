@@ -86,6 +86,7 @@
             // 
             // TextField
             // 
+            this.TextField.AcceptsTab = true;
             this.TextField.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.TextField.Location = new System.Drawing.Point(671, 12);
             this.TextField.Name = "TextField";
@@ -93,6 +94,7 @@
             this.TextField.TabIndex = 1;
             this.TextField.Text = "";
             this.TextField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextField_KeyDown);
+            this.TextField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextField_KeyPress);
             // 
             // Up
             // 

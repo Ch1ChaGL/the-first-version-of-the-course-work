@@ -268,6 +268,7 @@ namespace RobotFirstVersion
                         }
                         break;
                     case CommandBlockType.While:
+                        if (robot.checkRobotStatus() == 1) return;
                         while (CheckWhileCondition(nestedBlock, robot, maze))
                         {
                             foreach (var commandBlock in nestedBlock.NestedBlocks)
@@ -278,6 +279,14 @@ namespace RobotFirstVersion
                                     if (robot.checkRobotStatus() == 1)
                                     {
                                         return;
+                                    }
+                                }
+                                else if (commandBlock.Type == CommandBlockType.While)
+                                {
+                                    while (CheckWhileCondition(commandBlock, robot, maze))
+                                    {
+                                        ParseCommandBlock(commandBlock, robot, maze);
+                                        if (robot.checkRobotStatus() == 1) return;
                                     }
                                 }
                                 else if (commandBlock.Type == CommandBlockType.If)
@@ -299,6 +308,7 @@ namespace RobotFirstVersion
                                                 while (CheckWhileCondition(nestedCommandBlock, robot, maze))
                                                 {
                                                     ParseCommandBlock(nestedCommandBlock, robot, maze);
+                                                    if (robot.checkRobotStatus() == 1) break;
                                                 }
                                             }
                                             else
