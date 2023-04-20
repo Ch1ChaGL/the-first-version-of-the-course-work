@@ -17,18 +17,26 @@ namespace RobotFirstVersion
         private int _currentCommandIndex = 0;
         private Maze maze;
         CommandBlock _comandBlock;
+        private bool stepByStep = false;
         Stack<List<string>> blockStack = new Stack<List<string>>();
-        public ParserCommand(string text)
+        int x;
+        int y;
+        public ParserCommand(string text, Robot robot, Maze maze)
         {
+
             //_commands = text.Split('\n').ToList();
             //_commands.RemoveAll(string.IsNullOrEmpty);
+            x = robot.x;
+            y = robot.y;
             _comandBlock = ParseCommands(text);
             _interpreter = new CommandInterpreter();
+            AddCommandsToQueue(_comandBlock, robot, maze);
         }
 
         public int ParseAll(Robot robot, Maze maze)
         {
-
+            x = robot.x;
+            y = robot.y;
                 ParseCommandBlock(_comandBlock, robot, maze);
                 if (robot.checkRobotStatus() == 1)
                 {
@@ -40,13 +48,247 @@ namespace RobotFirstVersion
 
 
 
+        private List<CommandBlock> _commandQueue = new List<CommandBlock>();
 
-        public int ParseNext(Robot robot)
+        bool isNext = true;
+        public void parseNext(Robot robot, Maze maze)
         {
-            return 0;
+            x = robot.x;
+            y = robot.y;
+            isNext = true;
+
+        }
+        bool skipElse = false;
+        private void AddCommandsToQueue(CommandBlock block, Robot robot, Maze maze)
+        {
+            foreach (var nestedBlock in block.NestedBlocks)
+            {
+                switch (nestedBlock.Type)
+                {
+                    case CommandBlockType.Command:
+                        if (nestedBlock.Value == "Вверх") y--;
+                        else if (nestedBlock.Value == "Вниз") y++;
+                        else if (nestedBlock.Value == "Влево") x--;
+                        else if (nestedBlock.Value == "Вправо") x++;
+                        if (maze.checkСell(x, y) == 1) return; 
+                        _commandQueue.Add(nestedBlock);
+                        break;
+                    case CommandBlockType.If:
+                        if (nestedBlock.Type == CommandBlockType.If && CheckIfCondition(nestedBlock, robot, maze))
+                        {
+                            
+                            foreach (var commandBlock in nestedBlock.NestedBlocks)
+                            {
+                                skipElse = true;
+                                if (commandBlock.Type == CommandBlockType.Command)
+                                {
+                                    if (commandBlock.Value == "Вверх") y--;
+                                    else if (commandBlock.Value == "Вниз") y++;
+                                    else if (commandBlock.Value == "Влево") x--;
+                                    else if (commandBlock.Value == "Вправо") x++;
+                                    _commandQueue.Add(commandBlock);
+                                    if (maze.checkСell(x, y) == 1) return;
+
+                                }
+                                else if (commandBlock.Type == CommandBlockType.While)
+                                {
+                                    while (CheckWhileCondition(commandBlock, robot, maze))
+                                    {
+                                        AddCommandsToQueue(commandBlock, robot, maze);
+                                    }
+                                }
+                                else if (commandBlock.Type == CommandBlockType.If)
+                                {
+                                    skipElse = true;
+                                    if (CheckIfCondition(commandBlock, robot, maze))
+                                    {
+                                        foreach (var nestedCommandBlock in commandBlock.NestedBlocks)
+                                        {
+                                            if (nestedCommandBlock.Type == CommandBlockType.Command)
+                                            {
+                                                if (nestedCommandBlock.Value == "Вверх") y--;
+                                                else if (nestedCommandBlock.Value == "Вниз") y++;
+                                                else if (nestedCommandBlock.Value == "Влево") x--;
+                                                else if (nestedCommandBlock.Value == "Вправо") x++;
+                                                _commandQueue.Add(nestedCommandBlock);
+                                                if (maze.checkСell(x, y) == 1) return;
+                                            }
+                                            else if (nestedCommandBlock.Type == CommandBlockType.While)
+                                            {
+                                                while (CheckWhileCondition(nestedCommandBlock, robot, maze))
+                                                {
+                                                    AddCommandsToQueue(nestedCommandBlock, robot, maze);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                AddCommandsToQueue(nestedCommandBlock, robot, maze);
+                                            }
+                                        }
+                                    }
+                                    else if (commandBlock.NestedBlocks.Count > 1 && commandBlock.NestedBlocks[1].Type == CommandBlockType.Else)
+                                    {
+                                        // do nothing, skip commands in the else block
+                                    }
+                                }
+                                else
+                                {
+                                    AddCommandsToQueue(commandBlock, robot, maze);
+                                }
+                            }
+                        }
+                        else if (nestedBlock.NestedBlocks.Count > 1 && nestedBlock.Type == CommandBlockType.Else)
+                        {
+                            foreach (var commandBlock in nestedBlock.NestedBlocks[1].NestedBlocks)
+                            {
+                                if (commandBlock.Type == CommandBlockType.Command)
+                                {
+                                    if (commandBlock.Value == "Вверх") y--;
+                                    else if (commandBlock.Value == "Вниз") y++;
+                                    else if (commandBlock.Value == "Влево") x--;
+                                    else if (commandBlock.Value == "Вправо") x++;
+                                    _commandQueue.Add(commandBlock);
+                                    if (maze.checkСell(x, y) == 1) return;
+                                }
+                                else if (commandBlock.Type == CommandBlockType.While)
+                                {
+                                    while (CheckWhileCondition(commandBlock, robot, maze))
+                                    {
+                                        AddCommandsToQueue(commandBlock, robot, maze);
+                                    }
+                                }
+                                else
+                                {
+                                    AddCommandsToQueue(commandBlock, robot, maze);
+                                }
+                            }
+                        }
+                        break;
+                    case CommandBlockType.Else:
+                        if (skipElse) { skipElse = false; continue; }
+                        foreach (var commandBlock in nestedBlock.NestedBlocks)
+                        {
+                            if (commandBlock.Type == CommandBlockType.Command)
+                            {
+                                if (robot.checkRobotStatus() == 1)
+                                {
+                                    return;
+                                }
+                                if (commandBlock.Value == "Вверх") y--;
+                                else if (commandBlock.Value == "Вниз") y++;
+                                else if (commandBlock.Value == "Влево") x--;
+                                else if (commandBlock.Value == "Вправо") x++;
+                                _commandQueue.Add(commandBlock);
+                                if (maze.checkСell(x, y) == 1) return;
+                            }
+                            else if (commandBlock.Type == CommandBlockType.While)
+                            {
+                                while (CheckWhileCondition(commandBlock, robot, maze))
+                                {
+                                    AddCommandsToQueue(commandBlock, robot, maze);
+                                }
+                            }
+                            else
+                            {
+                                AddCommandsToQueue(commandBlock, robot, maze);
+                            }
+                        }
+                        break;
+                    case CommandBlockType.While:
+                        while (CheckWhileCondition(nestedBlock, robot, maze))
+                        {
+                            foreach (var commandBlock in nestedBlock.NestedBlocks)
+                            {
+                                if (commandBlock.Type == CommandBlockType.Command)
+                                {
+                                    if (commandBlock.Value == "Вверх") y--;
+                                    else if (commandBlock.Value == "Вниз") y++;
+                                    else if (commandBlock.Value == "Влево") x--;
+                                    else if (commandBlock.Value == "Вправо") x++;
+                                    _commandQueue.Add(commandBlock);
+                                    if (maze.checkСell(x, y) == 1) return;
+                                }
+                                else if (commandBlock.Type == CommandBlockType.While)
+                                {
+                                    while (CheckWhileCondition(commandBlock, robot, maze))
+                                    {
+                                        AddCommandsToQueue(commandBlock, robot, maze);
+                                    }
+                                }
+                                else if (commandBlock.Type == CommandBlockType.If)
+                                {
+                                    if (CheckIfCondition(commandBlock, robot, maze))
+                                    {
+                                        skipElse = true;
+                                        foreach (var nestedCommandBlock in commandBlock.NestedBlocks)
+                                        {
+                                            if (nestedCommandBlock.Type == CommandBlockType.Command)
+                                            {
+                                                if (nestedCommandBlock.Value == "Вверх") y--;
+                                                else if (nestedCommandBlock.Value == "Вниз") y++;
+                                                else if (nestedCommandBlock.Value == "Влево") x--;
+                                                else if (nestedCommandBlock.Value == "Вправо") x++;
+                                            
+                                                _commandQueue.Add(nestedCommandBlock);
+                                                if (maze.checkСell(x, y) == 1) return;
+
+                                            }
+                                            else if (nestedCommandBlock.Type == CommandBlockType.While)
+                                            {
+                                                while (CheckWhileCondition(nestedCommandBlock, robot, maze))
+                                                {
+                                                    AddCommandsToQueue(nestedCommandBlock, robot, maze);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                AddCommandsToQueue(nestedCommandBlock, robot, maze);
+                                            }
+                                        }
+                                    }
+                                }
+                                else if(commandBlock.Type == CommandBlockType.Else)
+                                {
+                                    if (skipElse) { skipElse = false; continue; }
+                                    foreach (var commandBlock2 in nestedBlock.NestedBlocks)
+                                    {
+                                        if (commandBlock2.Type == CommandBlockType.Command)
+                                        {
+                                            if (commandBlock2.Value == "Вверх") y--;
+                                            else if (commandBlock2.Value == "Вниз") y++;
+                                            else if (commandBlock2.Value == "Влево") x--;
+                                            else if (commandBlock2.Value == "Вправо") x++;
+                                            _commandQueue.Add(commandBlock2);
+                                            if (maze.checkСell(x, y) == 1) return;
+                                        }
+                                        else if (commandBlock2.Type == CommandBlockType.While)
+                                        {
+                                            while (CheckWhileCondition(commandBlock2, robot, maze))
+                                            {
+                                                AddCommandsToQueue(commandBlock2, robot, maze);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            AddCommandsToQueue(commandBlock2, robot, maze);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    AddCommandsToQueue(commandBlock, robot, maze);
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
         }
 
-       
+
+
+
+            //private int _currentCommandIndex = 0;
 
         public CommandBlock ParseCommands(string text)
         {
@@ -102,114 +344,20 @@ namespace RobotFirstVersion
 
                 index++;
             }
-
+          
             return rootBlock;
         }
 
-        //private void ParseCommandBlock(CommandBlock block, Robot robot, Maze maze)
-        //{
-        //    foreach (var nestedBlock in block.NestedBlocks)
-        //    {
-        //        switch (nestedBlock.Type)
-        //        {
-        //            case CommandBlockType.Command:
-        //                _interpreter.interpret(nestedBlock.Value, robot);
-        //                break;
-        //            case CommandBlockType.If:
-        //                if (CheckIfCondition(nestedBlock, robot, maze))
-        //                {
-        //                    foreach (var commandBlock in nestedBlock.NestedBlocks)
-        //                    {
-        //                        if (commandBlock.Type == CommandBlockType.Command)
-        //                        {
-        //                            if (robot.checkRobotStatus() == 1)
-        //                            {
-        //                                return;
-        //                            }
-        //                            _interpreter.interpret(commandBlock.Value, robot);
-        //                        }
-        //                        else
-        //                        {
-        //                            ParseCommandBlock(commandBlock, robot, maze);
-        //                        }
-        //                    }
-        //                }
-        //                else if (nestedBlock.NestedBlocks.Count > 1 && nestedBlock.NestedBlocks[1].Type == CommandBlockType.Else)
-        //                {
-        //                    ParseCommandBlock(nestedBlock.NestedBlocks[1], robot, maze);
-        //                }
-        //                break;
-        //            case CommandBlockType.Else:
-        //                foreach (var commandBlock in nestedBlock.NestedBlocks)
-        //                {
-        //                    if (commandBlock.Type == CommandBlockType.Command)
-        //                    {
-        //                        if (robot.checkRobotStatus() == 1)
-        //                        {
-        //                            return;
-        //                        }
-        //                        _interpreter.interpret(commandBlock.Value, robot);
-        //                    }
-        //                    else
-        //                    {
-        //                        ParseCommandBlock(commandBlock, robot, maze);
-        //                    }
-        //                }
-        //                break;
-        //            case CommandBlockType.While:
-        //                while (CheckWhileCondition(nestedBlock, robot, maze))
-        //                {
-        //                    foreach (var commandBlock in nestedBlock.NestedBlocks)
-        //                    {
-        //                        if (commandBlock.Type == CommandBlockType.Command)
-        //                        {
-        //                            _interpreter.interpret(commandBlock.Value, robot);
-        //                            if (robot.checkRobotStatus() == 1)
-        //                            {
-        //                                return;
-        //                            }
-        //                        }
-        //                        else if (commandBlock.Type == CommandBlockType.If)
-        //                        {
-        //                            if (CheckIfCondition(commandBlock, robot, maze))
-        //                            {
-        //                                foreach (var nestedCommandBlock in commandBlock.NestedBlocks)
-        //                                {
-        //                                    if (nestedCommandBlock.Type == CommandBlockType.Command)
-        //                                    {
-        //                                        _interpreter.interpret(nestedCommandBlock.Value, robot);
-        //                                        if (robot.checkRobotStatus() == 1)
-        //                                        {
-        //                                            return;
-        //                                        }
-        //                                    }
-        //                                    else
-        //                                    {
-        //                                        ParseCommandBlock(nestedCommandBlock, robot, maze);
-        //                                    }
-        //                                }
-        //                            }
-        //                        }
-        //                        else
-        //                        {
-        //                            ParseCommandBlock(commandBlock, robot, maze);
-        //                        }
-        //                    }
-        //                }
-        //                break;
-        //            default:
-        //                throw new NotImplementedException($"Unhandled command block type: {nestedBlock.Type}");
-        //        }
-        //    }
-        //}
         private void ParseCommandBlock(CommandBlock block, Robot robot, Maze maze)
         {
             foreach (var nestedBlock in block.NestedBlocks)
             {
+                x = robot.x;
+                y = robot.y;
                 switch (nestedBlock.Type)
                 {
                     case CommandBlockType.Command:
-                        _interpreter.interpret(nestedBlock.Value, robot);                      
+                        _interpreter.interpret(nestedBlock.Value, robot);
                         break;
                     case CommandBlockType.If:
                         if (CheckIfCondition(nestedBlock, robot, maze))
@@ -342,8 +490,11 @@ namespace RobotFirstVersion
             {
                 // Если есть условие отрицания, то проверяем, есть ли стена в нужном направлении
                 var direction = ifBlock.Value.Substring(1); // обрезаем восклицательный знак
-                var x = robot.x;
-                var y = robot.y;
+               
+                //var x = robot.x;
+                //var y = robot.y;
+                
+                
 
                 switch (direction)
                 {
@@ -362,8 +513,8 @@ namespace RobotFirstVersion
             else
             {
                 // Если есть обычное условие, то проверяем, свободна ли клетка
-                var x = robot.x;
-                var y = robot.y;
+                //var x = robot.x;
+                //var y = robot.y;
                 var direction = ifBlock.Value;
                 switch (direction)
                 {
@@ -394,8 +545,8 @@ namespace RobotFirstVersion
             {
                 // Если есть условие отрицания, то проверяем, есть ли стена в нужном направлении
                 var direction = whileBlock.Value.Substring(1); // обрезаем восклицательный знак
-                var x = robot.x;
-                var y = robot.y;
+                //var x = robot.x;
+                //var y = robot.y;
 
                 switch (direction)
                 {
@@ -414,8 +565,8 @@ namespace RobotFirstVersion
             else
             {
                 // Если есть обычное условие, то проверяем, свободна ли клетка
-                var x = robot.x;
-                var y = robot.y;
+                //var x = robot.x;
+                //var y = robot.y;
                 var direction = whileBlock.Value;
                 switch (direction)
                 {

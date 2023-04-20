@@ -16,7 +16,7 @@ namespace RobotFirstVersion
             Else,
             While
         }
-
+        public int CurrentIndex { get; set; } = 0;
         public CommandBlockType Type { get; }
         public string Value { get; }
         public List<CommandBlock> NestedBlocks { get; }

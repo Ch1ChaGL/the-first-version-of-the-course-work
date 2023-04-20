@@ -381,7 +381,7 @@ namespace RobotFirstVersion
 
         private void playToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            parser = new ParserCommand(TextField.Text);
+            parser = new ParserCommand(TextField.Text, robot, maze);
             result(parser.ParseAll(robot, maze));
         }
 
@@ -389,14 +389,10 @@ namespace RobotFirstVersion
         {
             if (parser == null)
             {
-                parser = new ParserCommand(TextField.Text);
+                parser = new ParserCommand(TextField.Text, robot, maze);
             }
-            int value = parser.ParseNext(robot);
-            if (value != -1)
-            {
-                result(value);
-                parser = null;
-            }
+            parser.parseNext(robot, maze);
+            
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
