@@ -379,19 +379,26 @@ namespace RobotFirstVersion
             }
         }
 
-        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void playToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            robot.x = robot.startX;
+            robot.y = robot.startY;
             parser = new ParserCommand(TextField.Text, robot, maze);
-            result(parser.ParseAll(robot, maze));
+            result(await parser.ParseAll(robot, maze));
         }
 
         private void nextStepToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (parser == null)
-            {
+           if (parser == null)
+           {
                 parser = new ParserCommand(TextField.Text, robot, maze);
-            }
-            parser.parseNext(robot, maze);
+           }
+           int value = parser.parseNext(robot, maze);
+           if (value != -1)
+           {
+                result(value); 
+                parser = null;
+           }
             
         }
 
@@ -797,10 +804,17 @@ namespace RobotFirstVersion
 
         private void TextField_KeyPress(object sender, KeyPressEventArgs e)
         {
+           
             if (e.KeyChar == 9)
             {
                 e.Handled = false;
             }
+           
+        }
+
+        private void TextField_TextChanged(object sender, EventArgs e)
+        {
+            parser = null;
         }
     }
 }

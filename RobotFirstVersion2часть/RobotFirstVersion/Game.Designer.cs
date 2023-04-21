@@ -93,6 +93,7 @@
             this.TextField.Size = new System.Drawing.Size(519, 458);
             this.TextField.TabIndex = 1;
             this.TextField.Text = "";
+            this.TextField.TextChanged += new System.EventHandler(this.TextField_TextChanged);
             this.TextField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextField_KeyDown);
             this.TextField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextField_KeyPress);
             // 

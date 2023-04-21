@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static RobotFirstVersion.CommandBlock;
 
@@ -15,9 +16,7 @@ namespace RobotFirstVersion
         //private readonly List<string> _commands = new List<string>();
         private readonly CommandInterpreter _interpreter;
         private int _currentCommandIndex = 0;
-        private Maze maze;
         CommandBlock _comandBlock;
-        private bool stepByStep = false;
         Stack<List<string>> blockStack = new Stack<List<string>>();
         int x;
         int y;
@@ -33,16 +32,16 @@ namespace RobotFirstVersion
             AddCommandsToQueue(_comandBlock, robot, maze);
         }
 
-        public int ParseAll(Robot robot, Maze maze)
+        public async Task<int> ParseAll(Robot robot, Maze maze)
         {
-            x = robot.x;
-            y = robot.y;
-                ParseCommandBlock(_comandBlock, robot, maze);
-                if (robot.checkRobotStatus() == 1)
-                {
-                    return 1;
-                }
-
+            for (int i = _currentCommandIndex; i < _commandQueue.Count; i++)
+            {
+               
+                _interpreter.interpret(_commandQueue[i].Value, robot);
+                 await Task.Delay(300);
+                _currentCommandIndex++;
+            }           
+            _currentCommandIndex = 0;
             return robot.checkRobotStatus();
         }
 
@@ -50,12 +49,14 @@ namespace RobotFirstVersion
 
         private List<CommandBlock> _commandQueue = new List<CommandBlock>();
 
-        bool isNext = true;
-        public void parseNext(Robot robot, Maze maze)
+        public int parseNext(Robot robot, Maze maze)
         {
-            x = robot.x;
-            y = robot.y;
-            isNext = true;
+          
+            _interpreter.interpret(_commandQueue[_currentCommandIndex].Value, robot);
+            _currentCommandIndex++;
+            if (_currentCommandIndex == _commandQueue.Count) { _currentCommandIndex = 0; return robot.checkRobotStatus(); }
+
+            return -1;
 
         }
         int skipElse = 0;
@@ -70,9 +71,9 @@ namespace RobotFirstVersion
                         if (nestedBlock.Value == "Вверх") y--;
                         else if (nestedBlock.Value == "Вниз") y++;
                         else if (nestedBlock.Value == "Влево") x--;
-                        else if (nestedBlock.Value == "Вправо") x++;
-                        if (maze.checkСell(x, y) == 1) return; 
+                        else if (nestedBlock.Value == "Вправо") x++;                       
                         _commandQueue.Add(nestedBlock);
+                        if (maze.checkСell(x, y) == 1) return;
                         break;
                     case CommandBlockType.If:
                         if (nestedBlock.Type == CommandBlockType.If && CheckIfCondition(nestedBlock, robot, maze))
@@ -586,93 +587,5 @@ namespace RobotFirstVersion
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }
-
-
-//public int ParseNext(Robot robot)
-//{
-//    if (_currentCommandIndex < _commands.Count)
-//    {
-//        var command = _commands[_currentCommandIndex];
-//        _interpreter.interpret(command, robot);
-//        _currentCommandIndex++;
-//        if (robot.checkRobotStatus() == 1)
-//        {
-//            return 1;
-//        }
-//        if (_currentCommandIndex == _commands.Count)
-//        {
-//            return robot.checkRobotStatus();
-//        }
-//        return -1;
-//    }
-//    return 0;
-//}
-
-
-//public CommandBlock ParseCommands(string text)
-//{
-//    var lines = text.Split('\n');
-//    var index = 0;
-
-//    var blockStack = new Stack<CommandBlock>();
-//    var rootBlock = new CommandBlock(CommandBlockType.Command, "");
-//    blockStack.Push(rootBlock);
-
-//    while (index < lines.Length)
-//    {
-//        var line = lines[index].Trim();
-//        if (string.IsNullOrEmpty(line))
-//        {
-//            index++;
-//            continue;
-//        }
-
-//        if (line.StartsWith("if("))
-//        {
-//            var condition = line.Substring(3, line.Length - 4);
-//            var ifBlock = new CommandBlock(CommandBlockType.If, condition);
-//            blockStack.Peek().NestedBlocks.Add(ifBlock);
-//            blockStack.Push(ifBlock);
-//        }
-//        else if (line == "}")
-//        {
-//            blockStack.Pop();
-//        }
-//        else if (line.StartsWith("else"))
-//        {
-//            var elseBlock = new CommandBlock(CommandBlockType.Else, "");
-//            blockStack.Peek().NestedBlocks.Add(elseBlock);
-//            blockStack.Push(elseBlock);
-//        }
-//        else if (line.StartsWith("while("))
-//        {
-//            var condition = line.Substring(6, line.Length - 7);
-//            var whileBlock = new CommandBlock(CommandBlockType.While, condition);
-//            blockStack.Peek().NestedBlocks.Add(whileBlock);
-//            blockStack.Push(whileBlock);
-//        }
-//        else
-//        {
-//            var commandBlock = new CommandBlock(CommandBlockType.Command, line);
-
-//            blockStack.Peek().NestedBlocks.Add(commandBlock);
-//        }
-
-//        index++;
-//    }
-
-//    return rootBlock;
-//}
