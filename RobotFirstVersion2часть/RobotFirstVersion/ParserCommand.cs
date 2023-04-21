@@ -58,11 +58,12 @@ namespace RobotFirstVersion
             isNext = true;
 
         }
-        bool skipElse = false;
+        int skipElse = 0;
         private void AddCommandsToQueue(CommandBlock block, Robot robot, Maze maze)
         {
             foreach (var nestedBlock in block.NestedBlocks)
             {
+                if (skipElse > 0 && block.Type == CommandBlockType.Else) { skipElse--; continue;  }
                 switch (nestedBlock.Type)
                 {
                     case CommandBlockType.Command:
@@ -79,7 +80,7 @@ namespace RobotFirstVersion
                             
                             foreach (var commandBlock in nestedBlock.NestedBlocks)
                             {
-                                skipElse = true;
+                                skipElse++;
                                 if (commandBlock.Type == CommandBlockType.Command)
                                 {
                                     if (commandBlock.Value == "Вверх") y--;
@@ -97,9 +98,9 @@ namespace RobotFirstVersion
                                         AddCommandsToQueue(commandBlock, robot, maze);
                                     }
                                 }
-                                else if (commandBlock.Type == CommandBlockType.If)
+                                else if (commandBlock.Type == CommandBlockType.If && CheckIfCondition(commandBlock, robot, maze))
                                 {
-                                    skipElse = true;
+                                    skipElse++;
                                     if (CheckIfCondition(commandBlock, robot, maze))
                                     {
                                         foreach (var nestedCommandBlock in commandBlock.NestedBlocks)
@@ -129,6 +130,7 @@ namespace RobotFirstVersion
                                     else if (commandBlock.NestedBlocks.Count > 1 && commandBlock.NestedBlocks[1].Type == CommandBlockType.Else)
                                     {
                                         // do nothing, skip commands in the else block
+                                        continue;
                                     }
                                 }
                                 else
@@ -139,6 +141,7 @@ namespace RobotFirstVersion
                         }
                         else if (nestedBlock.NestedBlocks.Count > 1 && nestedBlock.Type == CommandBlockType.Else)
                         {
+                            if (skipElse > 0) { skipElse--; continue; }
                             foreach (var commandBlock in nestedBlock.NestedBlocks[1].NestedBlocks)
                             {
                                 if (commandBlock.Type == CommandBlockType.Command)
@@ -165,7 +168,7 @@ namespace RobotFirstVersion
                         }
                         break;
                     case CommandBlockType.Else:
-                        if (skipElse) { skipElse = false; continue; }
+                        if (skipElse > 0) { skipElse--; continue; }
                         foreach (var commandBlock in nestedBlock.NestedBlocks)
                         {
                             if (commandBlock.Type == CommandBlockType.Command)
@@ -219,7 +222,7 @@ namespace RobotFirstVersion
                                 {
                                     if (CheckIfCondition(commandBlock, robot, maze))
                                     {
-                                        skipElse = true;
+                                        skipElse++;
                                         foreach (var nestedCommandBlock in commandBlock.NestedBlocks)
                                         {
                                             if (nestedCommandBlock.Type == CommandBlockType.Command)
@@ -249,7 +252,7 @@ namespace RobotFirstVersion
                                 }
                                 else if(commandBlock.Type == CommandBlockType.Else)
                                 {
-                                    if (skipElse) { skipElse = false; continue; }
+                                    if (skipElse > 0) { skipElse--; continue; }
                                     foreach (var commandBlock2 in nestedBlock.NestedBlocks)
                                     {
                                         if (commandBlock2.Type == CommandBlockType.Command)
