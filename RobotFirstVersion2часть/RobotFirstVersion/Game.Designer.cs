@@ -28,12 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TextField = new System.Windows.Forms.RichTextBox();
-            this.Up = new System.Windows.Forms.Button();
-            this.Down = new System.Windows.Forms.Button();
             this.Left = new System.Windows.Forms.Button();
-            this.Right = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.Editing = new System.Windows.Forms.ToolStripMenuItem();
             this.Copy = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,10 +38,12 @@
             this.Reset = new System.Windows.Forms.ToolStripMenuItem();
             this.Insert = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Cancel = new System.Windows.Forms.ToolStripMenuItem();
             this.nextStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ifBtn = new System.Windows.Forms.Button();
-            this.not = new System.Windows.Forms.Button();
+            this.загрузкаВыгрузкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.загрузитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.выгрузитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.insertIf = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -66,7 +64,10 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.freeWhile = new System.Windows.Forms.RadioButton();
             this.notFreeWhile = new System.Windows.Forms.RadioButton();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.Right = new System.Windows.Forms.Button();
+            this.Down = new System.Windows.Forms.Button();
+            this.Up = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -74,15 +75,8 @@
             this.groupBox4.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 42);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(631, 631);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // TextField
             // 
@@ -97,53 +91,27 @@
             this.TextField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextField_KeyDown);
             this.TextField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextField_KeyPress);
             // 
-            // Up
-            // 
-            this.Up.Location = new System.Drawing.Point(747, 499);
-            this.Up.Name = "Up";
-            this.Up.Size = new System.Drawing.Size(68, 41);
-            this.Up.TabIndex = 2;
-            this.Up.Text = "Up";
-            this.Up.UseVisualStyleBackColor = true;
-            this.Up.Click += new System.EventHandler(this.Up_Click);
-            // 
-            // Down
-            // 
-            this.Down.Location = new System.Drawing.Point(747, 595);
-            this.Down.Name = "Down";
-            this.Down.Size = new System.Drawing.Size(68, 41);
-            this.Down.TabIndex = 3;
-            this.Down.Text = "Down";
-            this.Down.UseVisualStyleBackColor = true;
-            this.Down.Click += new System.EventHandler(this.Up_Click);
-            // 
             // Left
             // 
-            this.Left.Location = new System.Drawing.Point(680, 548);
+            this.Left.BackgroundImage = global::RobotFirstVersion.Properties.Resources.left_arrowFirstStyle;
+            this.Left.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Left.Location = new System.Drawing.Point(676, 533);
             this.Left.Name = "Left";
-            this.Left.Size = new System.Drawing.Size(65, 41);
+            this.Left.Size = new System.Drawing.Size(65, 56);
             this.Left.TabIndex = 4;
             this.Left.Text = "Left";
             this.Left.UseVisualStyleBackColor = true;
             this.Left.Click += new System.EventHandler(this.Up_Click);
-            // 
-            // Right
-            // 
-            this.Right.Location = new System.Drawing.Point(820, 548);
-            this.Right.Name = "Right";
-            this.Right.Size = new System.Drawing.Size(63, 41);
-            this.Right.TabIndex = 5;
-            this.Right.Text = "Right";
-            this.Right.UseVisualStyleBackColor = true;
-            this.Right.Click += new System.EventHandler(this.Up_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Editing,
             this.playToolStripMenuItem,
+            this.Cancel,
             this.nextStepToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.exitToolStripMenuItem,
+            this.загрузкаВыгрузкаToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1520, 24);
@@ -159,83 +127,95 @@
             this.Reset,
             this.Insert});
             this.Editing.Name = "Editing";
-            this.Editing.Size = new System.Drawing.Size(56, 20);
-            this.Editing.Text = "Editing";
+            this.Editing.Size = new System.Drawing.Size(108, 20);
+            this.Editing.Text = "Редактирование";
             // 
             // Copy
             // 
             this.Copy.Name = "Copy";
-            this.Copy.Size = new System.Drawing.Size(107, 22);
-            this.Copy.Text = "Copy";
+            this.Copy.Size = new System.Drawing.Size(139, 22);
+            this.Copy.Text = "Копировать";
             this.Copy.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // Delete
             // 
             this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(107, 22);
-            this.Delete.Text = "Delete";
+            this.Delete.Size = new System.Drawing.Size(139, 22);
+            this.Delete.Text = "Удалить";
             this.Delete.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // Clear
             // 
             this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(107, 22);
-            this.Clear.Text = "Clear";
+            this.Clear.Size = new System.Drawing.Size(139, 22);
+            this.Clear.Text = "Очистить";
             this.Clear.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // Reset
             // 
             this.Reset.Name = "Reset";
-            this.Reset.Size = new System.Drawing.Size(107, 22);
-            this.Reset.Text = "Reset";
+            this.Reset.Size = new System.Drawing.Size(139, 22);
+            this.Reset.Text = "Перезапуск";
             this.Reset.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // Insert
             // 
             this.Insert.Name = "Insert";
-            this.Insert.Size = new System.Drawing.Size(107, 22);
-            this.Insert.Text = "Insert";
+            this.Insert.Size = new System.Drawing.Size(139, 22);
+            this.Insert.Text = "Вставить";
             this.Insert.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // playToolStripMenuItem
             // 
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            this.playToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.playToolStripMenuItem.Text = "Play";
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.playToolStripMenuItem.Text = "Пуск";
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
+            // 
+            // Cancel
+            // 
+            this.Cancel.Enabled = false;
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(46, 20);
+            this.Cancel.Text = "Стоп";
+            this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // nextStepToolStripMenuItem
             // 
             this.nextStepToolStripMenuItem.Name = "nextStepToolStripMenuItem";
-            this.nextStepToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.nextStepToolStripMenuItem.Text = "NextStep";
+            this.nextStepToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.nextStepToolStripMenuItem.Text = "Следующий шаг";
             this.nextStepToolStripMenuItem.Click += new System.EventHandler(this.nextStepToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.exitToolStripMenuItem.Text = "Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // ifBtn
+            // загрузкаВыгрузкаToolStripMenuItem
             // 
-            this.ifBtn.Location = new System.Drawing.Point(917, 548);
-            this.ifBtn.Name = "ifBtn";
-            this.ifBtn.Size = new System.Drawing.Size(75, 41);
-            this.ifBtn.TabIndex = 14;
-            this.ifBtn.Text = "If";
-            this.ifBtn.UseVisualStyleBackColor = true;
-            this.ifBtn.Click += new System.EventHandler(this.ifBtn_Click);
+            this.загрузкаВыгрузкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.загрузитьToolStripMenuItem,
+            this.выгрузитьToolStripMenuItem});
+            this.загрузкаВыгрузкаToolStripMenuItem.Name = "загрузкаВыгрузкаToolStripMenuItem";
+            this.загрузкаВыгрузкаToolStripMenuItem.Size = new System.Drawing.Size(123, 20);
+            this.загрузкаВыгрузкаToolStripMenuItem.Text = "Загрузка/Выгрузка";
             // 
-            // not
+            // загрузитьToolStripMenuItem
             // 
-            this.not.Location = new System.Drawing.Point(1020, 548);
-            this.not.Name = "not";
-            this.not.Size = new System.Drawing.Size(72, 41);
-            this.not.TabIndex = 15;
-            this.not.Text = "!";
-            this.not.UseVisualStyleBackColor = true;
+            this.загрузитьToolStripMenuItem.Name = "загрузитьToolStripMenuItem";
+            this.загрузитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.загрузитьToolStripMenuItem.Text = "Загрузить";
+            this.загрузитьToolStripMenuItem.Click += new System.EventHandler(this.загрузитьToolStripMenuItem_Click);
+            // 
+            // выгрузитьToolStripMenuItem
+            // 
+            this.выгрузитьToolStripMenuItem.Name = "выгрузитьToolStripMenuItem";
+            this.выгрузитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.выгрузитьToolStripMenuItem.Text = "Выгрузить";
+            this.выгрузитьToolStripMenuItem.Click += new System.EventHandler(this.выгрузитьToolStripMenuItem_Click);
             // 
             // groupBox1
             // 
@@ -330,6 +310,7 @@
             // freeIf
             // 
             this.freeIf.AutoSize = true;
+            this.freeIf.Checked = true;
             this.freeIf.Location = new System.Drawing.Point(16, 24);
             this.freeIf.Name = "freeIf";
             this.freeIf.Size = new System.Drawing.Size(73, 17);
@@ -442,6 +423,7 @@
             // freeWhile
             // 
             this.freeWhile.AutoSize = true;
+            this.freeWhile.Checked = true;
             this.freeWhile.Location = new System.Drawing.Point(16, 24);
             this.freeWhile.Name = "freeWhile";
             this.freeWhile.Size = new System.Drawing.Size(73, 17);
@@ -461,6 +443,50 @@
             this.notFreeWhile.Text = "Не свободно";
             this.notFreeWhile.UseVisualStyleBackColor = true;
             // 
+            // Right
+            // 
+            this.Right.BackgroundImage = global::RobotFirstVersion.Properties.Resources.right_arrowFirstStyle;
+            this.Right.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Right.Location = new System.Drawing.Point(821, 527);
+            this.Right.Name = "Right";
+            this.Right.Size = new System.Drawing.Size(66, 62);
+            this.Right.TabIndex = 5;
+            this.Right.Text = "Right";
+            this.Right.UseVisualStyleBackColor = true;
+            this.Right.Click += new System.EventHandler(this.Up_Click);
+            // 
+            // Down
+            // 
+            this.Down.BackgroundImage = global::RobotFirstVersion.Properties.Resources.down_arrowFirstStyle;
+            this.Down.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Down.Location = new System.Drawing.Point(747, 595);
+            this.Down.Name = "Down";
+            this.Down.Size = new System.Drawing.Size(68, 53);
+            this.Down.TabIndex = 3;
+            this.Down.Text = "Down";
+            this.Down.UseVisualStyleBackColor = true;
+            this.Down.Click += new System.EventHandler(this.Up_Click);
+            // 
+            // Up
+            // 
+            this.Up.BackgroundImage = global::RobotFirstVersion.Properties.Resources.up_arrowFirstStyle2;
+            this.Up.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Up.Location = new System.Drawing.Point(747, 476);
+            this.Up.Name = "Up";
+            this.Up.Size = new System.Drawing.Size(68, 60);
+            this.Up.TabIndex = 2;
+            this.Up.Text = "Up";
+            this.Up.UseVisualStyleBackColor = true;
+            this.Up.Click += new System.EventHandler(this.Up_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(12, 42);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(631, 631);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -468,8 +494,6 @@
             this.ClientSize = new System.Drawing.Size(1520, 689);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.not);
-            this.Controls.Add(this.ifBtn);
             this.Controls.Add(this.Right);
             this.Controls.Add(this.Left);
             this.Controls.Add(this.Down);
@@ -480,7 +504,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Game";
             this.Text = "Game";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -493,6 +516,7 @@
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -516,8 +540,6 @@
         private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nextStepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.Button ifBtn;
-        private System.Windows.Forms.Button not;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button insertIf;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -538,5 +560,9 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.RadioButton freeWhile;
         private System.Windows.Forms.RadioButton notFreeWhile;
+        private System.Windows.Forms.ToolStripMenuItem загрузкаВыгрузкаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem загрузитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem выгрузитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Cancel;
     }
 }

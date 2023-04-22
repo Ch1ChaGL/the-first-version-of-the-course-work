@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using static RobotFirstVersion.CommandBlock;
@@ -11,18 +12,16 @@ using static RobotFirstVersion.CommandBlock;
 namespace RobotFirstVersion
 {
     internal class ParserCommand
-    {
-        private readonly List<CommandBlock> _commands = new List<CommandBlock>();
-        //private readonly List<string> _commands = new List<string>();
+    { 
         private readonly CommandInterpreter _interpreter;
         private int _currentCommandIndex = 0;
         CommandBlock _comandBlock;
-        Stack<List<string>> blockStack = new Stack<List<string>>();
+        private List<CommandBlock> _commandQueue = new List<CommandBlock>();
         int x;
         int y;
         public ParserCommand(string text, Robot robot, Maze maze)
         {
-
+            
             //_commands = text.Split('\n').ToList();
             //_commands.RemoveAll(string.IsNullOrEmpty);
             x = robot.x;
@@ -32,22 +31,30 @@ namespace RobotFirstVersion
             AddCommandsToQueue(_comandBlock, robot, maze);
         }
 
-        public async Task<int> ParseAll(Robot robot, Maze maze)
+        public async Task<int> ParseAll(Robot robot, CancellationToken cancellationToken)
         {
             for (int i = _currentCommandIndex; i < _commandQueue.Count; i++)
             {
                
                 _interpreter.interpret(_commandQueue[i].Value, robot);
-                 await Task.Delay(300);
-                _currentCommandIndex++;
-            }           
+                try
+                {
+                    await Task.Delay(300, cancellationToken);
+                    _currentCommandIndex++;
+                }
+                catch (OperationCanceledException)
+                {
+                    return -1;
+                }
+               
+            }     
+            
             _currentCommandIndex = 0;
             return robot.checkRobotStatus();
         }
 
+       
 
-
-        private List<CommandBlock> _commandQueue = new List<CommandBlock>();
 
         public int parseNext(Robot robot, Maze maze)
         {
@@ -289,14 +296,9 @@ namespace RobotFirstVersion
             }
         }
 
-
-
-
-            //private int _currentCommandIndex = 0;
-
         public CommandBlock ParseCommands(string text)
         {
-            var lines = text.Split('\n');
+            var lines = text.Split(new[] { '\n', ' ' }, StringSplitOptions.RemoveEmptyEntries);
             var index = 0;
 
             var blockStack = new Stack<CommandBlock>();
@@ -311,10 +313,11 @@ namespace RobotFirstVersion
                     index++;
                     continue;
                 }
-
                 if (line.StartsWith("if("))
                 {
-                    var condition = line.Substring(3, line.Length - 4);
+                    string condition;
+                    if (line.EndsWith("{")) condition = line.Substring(3, line.Length - 5);
+                    else condition = line.Substring(3, line.Length - 4);
                     var ifBlock = new CommandBlock(CommandBlockType.If, condition);
                     blockStack.Peek().NestedBlocks.Add(ifBlock);
                     blockStack.Push(ifBlock);
@@ -351,6 +354,7 @@ namespace RobotFirstVersion
           
             return rootBlock;
         }
+
 
         private void ParseCommandBlock(CommandBlock block, Robot robot, Maze maze)
         {
@@ -568,6 +572,7 @@ namespace RobotFirstVersion
             }
             else
             {
+                            
                 // Если есть обычное условие, то проверяем, свободна ли клетка
                 //var x = robot.x;
                 //var y = robot.y;
@@ -589,3 +594,4 @@ namespace RobotFirstVersion
         }
     }
 }
+

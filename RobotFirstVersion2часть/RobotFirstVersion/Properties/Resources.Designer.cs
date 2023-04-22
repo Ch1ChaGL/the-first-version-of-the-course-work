@@ -63,9 +63,59 @@ namespace RobotFirstVersion.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap down_arrowFirstStyle {
+            get {
+                object obj = ResourceManager.GetObject("down_arrowFirstStyle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap left_arrowFirstStyle {
+            get {
+                object obj = ResourceManager.GetObject("left_arrowFirstStyle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap right_arrowFirstStyle {
+            get {
+                object obj = ResourceManager.GetObject("right_arrowFirstStyle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap robot {
             get {
                 object obj = ResourceManager.GetObject("robot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap up_arrowFirstStyle {
+            get {
+                object obj = ResourceManager.GetObject("up_arrowFirstStyle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap up_arrowFirstStyle2 {
+            get {
+                object obj = ResourceManager.GetObject("up_arrowFirstStyle2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

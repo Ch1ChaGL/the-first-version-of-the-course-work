@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace RobotFirstVersion
 {
@@ -16,6 +11,8 @@ namespace RobotFirstVersion
         Maze maze;
         Robot robot;
         ParserCommand parser = null;
+        CancellationTokenSource cancellationToken;
+
         public Game(int[,] map, int robotX, int robotY)
         {
             InitializeComponent();
@@ -23,41 +20,6 @@ namespace RobotFirstVersion
             maze = new Maze(map, robot ,pictureBox1);
             robot.setMaze(maze);
         }
-
-        private void Down_Click(object sender, EventArgs e)
-        {
-            robot.moveDown();
-        }
-
-        //private void Up_Click(object sender, EventArgs e)
-        //{
-        //    TextField.Text += "Вверх\n";
-        //}
-
-        //private void Down_Click_1(object sender, EventArgs e)
-        //{
-        //    TextField.Text += "Вниз\n";
-        //}
-
-        //private void Left_Click(object sender, EventArgs e)
-        //{
-        //    TextField.Text += "Влево\n";
-        //}
-
-        //private void Right_Click(object sender, EventArgs e)
-        //{
-        //    TextField.Text += "Вправо\n";
-        //}
-
-        private void Play_Click(object sender, EventArgs e)
-        {            
-        }
-
-        private void NextStep_Click(object sender, EventArgs e)
-        {   
-           
-        }
-
         private void result(int res)
         {
             if(res == 1)
@@ -76,12 +38,6 @@ namespace RobotFirstVersion
                 maze.resetMap();
             }
         }
-
-        private void Reset_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void TextField_KeyDown(object sender, KeyEventArgs e)
         {
             
@@ -119,49 +75,6 @@ namespace RobotFirstVersion
 
             //}
         }
-
-        //private void Up_Click(object sender, EventArgs e)
-        //{
-        //    string direction = "";
-        //    var button = sender as Button;
-        //    if (button.Name == "Up")
-        //    {
-        //        direction = "Вверх\n";
-        //    }
-        //    if (button.Name == "Left")
-        //    {
-        //        direction = "Влево\n";
-        //    }
-        //    if (button.Name == "Down")
-        //    {
-        //        direction = "Вниз\n";
-        //    }
-        //    if (button.Name == "Right")
-        //    {
-        //        direction = "Вправо\n";
-        //    }
-
-        //    Получаем номер строки, на которой находится курсор
-        //    int currentLineIndex = TextField.GetLineFromCharIndex(TextField.SelectionStart);
-
-        //    Находим начало следующей строки
-        //    int nextLineStart = TextField.GetFirstCharIndexFromLine(currentLineIndex + 1);
-        //    if (nextLineStart == -1)
-        //    {
-        //        Если следующей строки нет, то добавляем слово в конец текста
-        //       nextLineStart = TextField.Text.Length;
-        //    }
-
-
-        //    Добавляем слово на позицию nextLineStart
-        //    TextField.Text = TextField.Text.Insert(nextLineStart, direction);
-
-        //    Перемещаем курсор в конец добавленного слова
-        //    TextField.SelectionStart = nextLineStart + direction.Length;
-
-        //    Перемещаем фокус на текстовое поле
-        //    TextField.Focus();
-        //}
 
         private void Up_Click(object sender, EventArgs e)
         {
@@ -219,10 +132,6 @@ namespace RobotFirstVersion
             // Перемещаем фокус на текстовое поле
             TextField.Focus();
         }
-
-
-
-
 
         private void FnDelete()
         {
@@ -316,38 +225,6 @@ namespace RobotFirstVersion
                 MessageBox.Show("Данные в буфере обмена не являются текстом или отсутствуют.", "Ошибка");
             }
         }
-
-        private void Delete_Click(object sender, EventArgs e)
-        {
-            var button = sender as Button;
-
-            if(button.Name == "Delete")
-            {
-                FnDelete();
-                TextField.Focus();
-            }
-            if (button.Name == "Clear")
-            {
-                FnClear();
-                TextField.Focus();
-            }
-            if (button.Name == "Reset")
-            {
-                FnReset();
-                TextField.Focus();
-            }
-            if (button.Name == "Copy")
-            {
-                FnCopy();
-                TextField.Focus();
-            }
-            if(button.Name == "Insert")
-            {
-                FnInsert();
-                TextField.Focus();
-            }
-        }
-
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var button = sender as ToolStripMenuItem;
@@ -381,10 +258,28 @@ namespace RobotFirstVersion
 
         private async void playToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ValidationError vw = new ValidationError();
+            var err = vw.Validate(TextField.Text);
+            if (err.Count > 0)
+            {
+                for (int i = 0; i < err.Count; i++)
+                {
+                    Console.WriteLine(err[i]);
+                }
+                return;
+            }
+            parser = new ParserCommand(TextField.Text, robot, maze);
+            playToolStripMenuItem.Enabled = false;
+            Cancel.Enabled = true;
+            cancellationToken  = new CancellationTokenSource();
             robot.x = robot.startX;
             robot.y = robot.startY;
-            parser = new ParserCommand(TextField.Text, robot, maze);
-            result(await parser.ParseAll(robot, maze));
+           
+            nextStepToolStripMenuItem.Enabled = false;
+            result(await parser.ParseAll(robot, cancellationToken.Token));
+            Cancel.Enabled = false;
+            nextStepToolStripMenuItem.Enabled = true;
+            playToolStripMenuItem.Enabled = true;
         }
 
         private void nextStepToolStripMenuItem_Click(object sender, EventArgs e)
@@ -406,237 +301,6 @@ namespace RobotFirstVersion
         {
             Close();
         }
-
-        private void ifBtn_Click(object sender, EventArgs e)
-        {
-            string template = "if ()\n{\n\t\n}\n";
-            int currentLineIndex = TextField.GetLineFromCharIndex(TextField.SelectionStart);
-            int nextLineStart = TextField.GetFirstCharIndexFromLine(currentLineIndex + 1);
-            if (nextLineStart == -1)
-            {
-                nextLineStart = TextField.Text.Length;
-            }
-            TextField.Text = TextField.Text.Insert(nextLineStart, template);
-            TextField.SelectionStart = nextLineStart + template.Length - 5;
-            TextField.Focus();
-
-            // Перемещаем курсор внутрь скобок
-            TextField.SelectionStart += 4;
-        }
-
-        //private void insertIf_Click(object sender, EventArgs e)
-        //{
-        //    string direction = "";
-        //    var button = sender as RadioButton;
-
-        //    // Получаем выбранное направление
-        //    if (upIf.Checked)
-        //    {
-        //        direction = "Вверх";
-        //    }
-        //    else if (downIf.Checked)
-        //    {
-        //        direction = "Вниз";
-        //    }
-        //    else if (leftIf.Checked)
-        //    {
-        //        direction = "Влево";
-        //    }
-        //    else if (rightIf.Checked)
-        //    {
-        //        direction = "Вправо";
-        //    }
-
-        //    // Получаем тип условия
-        //    string condition = "";
-        //    if (freeIf.Checked)
-        //    {
-        //        condition = "";
-        //    }
-        //    else if (notFreeIf.Checked)
-        //    {
-        //        condition = "!";
-        //    }
-
-        //    // Вставляем команду в текстовое поле
-        //    int position = TextField.SelectionStart;
-
-        //    if (string.IsNullOrWhiteSpace(TextField.Text))
-        //    {
-        //        TextField.Text = "if(" + condition + direction + ")\n{\n\n}\n";
-        //    }
-        //    else if (string.IsNullOrWhiteSpace(TextField.Lines[TextField.GetLineFromCharIndex(position)]))
-        //    {
-        //        TextField.Text = TextField.Text.Insert(position, "if(" + condition + direction + ")\n{\n\n}\n");
-        //    }
-        //    else
-        //    {
-        //        TextField.Text = TextField.Text.Insert(position, "\nif(" + condition + direction + ")\n{\n\n}\n");
-        //    }
-
-        //    TextField.SelectionStart = position + 3 + condition.Length + direction.Length;
-        //    TextField.Focus();
-        //}
-        //private void insertIf_Click(object sender, EventArgs e)
-        //{
-        //    string direction = "";
-        //    var button = sender as RadioButton;
-
-        //    // Получаем выбранное направление
-        //    if (upIf.Checked)
-        //    {
-        //        direction = "Вверх";
-        //    }
-        //    else if (downIf.Checked)
-        //    {
-        //        direction = "Вниз";
-        //    }
-        //    else if (leftIf.Checked)
-        //    {
-        //        direction = "Влево";
-        //    }
-        //    else if (rightIf.Checked)
-        //    {
-        //        direction = "Вправо";
-        //    }
-
-        //    // Получаем тип условия
-        //    string condition = "";
-        //    if (freeIf.Checked)
-        //    {
-        //        condition = "";
-        //    }
-        //    else if (notFreeIf.Checked)
-        //    {
-        //        condition = "!";
-        //    }
-
-        //    // Вставляем команду в текстовое поле
-        //    int position = TextField.GetFirstCharIndexOfCurrentLine();
-
-        //    int openBrackets = 0;
-        //    if (string.IsNullOrWhiteSpace(TextField.Text))
-        //    {
-        //        TextField.Text = "if(" + condition + direction + ")\n{\n\n}\n";
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < position; i++)
-        //        {
-        //            if (TextField.Text[i] == '{')
-        //            {
-        //                openBrackets++;
-        //            }
-        //            else if (TextField.Text[i] == '}')
-        //            {
-        //                openBrackets--;
-        //            }
-        //        }
-
-        //        string indentation = new string(' ', openBrackets * 4);
-
-        //        if (string.IsNullOrWhiteSpace(TextField.Lines[TextField.GetLineFromCharIndex(position)]))
-        //        {
-        //            TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
-        //        }
-        //        else
-        //        {
-        //            TextField.Text = TextField.Text.Insert(position, "\n" + indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
-        //        }
-        //    }
-
-        //    TextField.SelectionStart = position + 3 + condition.Length + direction.Length + 4 * openBrackets + 4;
-        //    TextField.Focus();
-        //}
-
-
-
-
-
-
-        //private void insertIf_Click(object sender, EventArgs e)
-        //{
-        //    string direction = "";
-        //    var button = sender as RadioButton;
-
-        //    // Получаем выбранное направление
-        //    if (upIf.Checked)
-        //    {
-        //        direction = "Вверх";
-        //    }
-        //    else if (downIf.Checked)
-        //    {
-        //        direction = "Вниз";
-        //    }
-        //    else if (leftIf.Checked)
-        //    {
-        //        direction = "Влево";
-        //    }
-        //    else if (rightIf.Checked)
-        //    {
-        //        direction = "Вправо";
-        //    }
-
-        //    // Получаем тип условия
-        //    string condition = "";
-        //    if (freeIf.Checked)
-        //    {
-        //        condition = "";
-        //    }
-        //    else if (notFreeIf.Checked)
-        //    {
-        //        condition = "!";
-        //    }
-
-        //    // Вставляем команду в текстовое поле
-        //    int position = TextField.GetFirstCharIndexOfCurrentLine();
-
-        //    int openBrackets = 0;
-        //    if (string.IsNullOrWhiteSpace(TextField.Text))
-        //    {
-        //        TextField.Text = "if(" + condition + direction + ")\n{\n\n}\n";
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < position; i++)
-        //        {
-        //            if (TextField.Text[i] == '{')
-        //            {
-        //                openBrackets++;
-        //            }
-        //            else if (TextField.Text[i] == '}')
-        //            {
-        //                openBrackets--;
-        //            }
-        //        }
-
-        //        string indentation = new string(' ', openBrackets * 4);
-
-        //        int lineIndex = TextField.GetLineFromCharIndex(position);
-        //        if (lineIndex < TextField.Lines.Length - 1 && TextField.Lines[lineIndex].TrimEnd().EndsWith("}"))
-        //        {
-        //            // Вставляем блок на следующей строке после скобки
-        //            position = TextField.GetFirstCharIndexFromLine(lineIndex + 1);
-        //            TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
-        //        }
-        //        else
-        //        {
-        //            // Вставляем блок на текущей строке
-        //            if (string.IsNullOrWhiteSpace(TextField.Lines[TextField.GetLineFromCharIndex(position)]))
-        //            {
-        //                TextField.Text = TextField.Text.Insert(position, indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
-        //            }
-        //            else
-        //            {
-        //                TextField.Text = TextField.Text.Insert(position, "\n" + indentation + "if(" + condition + direction + ")\n" + indentation + "{\n" + indentation + "    \n" + indentation + "}\n");
-        //            }
-        //        }
-        //    }
-
-        //    TextField.SelectionStart = position + 3 + condition.Length + direction.Length + 4 * openBrackets + 4;
-        //    TextField.Focus();
-        //}
-
 
         private void insertIf_Click(object sender, EventArgs e)
         {
@@ -815,6 +479,39 @@ namespace RobotFirstVersion
         private void TextField_TextChanged(object sender, EventArgs e)
         {
             parser = null;
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            cancellationToken.Cancel();
+            maze.resetMap();
+            parser = null;
+        }
+
+        private void выгрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+                saveFileDialog.FilterIndex = 1;
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                    {
+                        writer.Write(TextField.Text);
+                    }
+                }
+        }
+
+        private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if(openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = openFileDialog.FileName;
+                TextField.Text = File.ReadAllText(fileName);
+            }
         }
     }
 }
